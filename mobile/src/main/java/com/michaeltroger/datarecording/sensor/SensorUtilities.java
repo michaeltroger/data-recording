@@ -1,4 +1,4 @@
-package com.michaeltroger.datarecording;
+package com.michaeltroger.datarecording.sensor;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,10 +6,11 @@ import android.hardware.Sensor;
 import android.os.Build;
 import android.support.annotation.NonNull;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.michaeltroger.datarecording.sensor.RecordingService;
 
-public class Utilities {
+import java.util.ArrayList;
+
+public class SensorUtilities {
 
     public static void startRecording(@NonNull final Context context) {
         final ArrayList<Integer> sensorTypes = new ArrayList<>();

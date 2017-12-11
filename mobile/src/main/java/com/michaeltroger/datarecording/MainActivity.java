@@ -1,8 +1,11 @@
 package com.michaeltroger.datarecording;
 
+import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
+
+import com.michaeltroger.datarecording.commands.ClickHandlers;
+import com.michaeltroger.datarecording.databinding.ActivityMainBinding;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -12,15 +15,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-    }
 
-    public void start(final View view) {
-        Utilities.startRecording(this);
+        final ActivityMainBinding binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
+        binding.setHandlers(new ClickHandlers());
     }
-
-    public void stop(final View view) {
-        Utilities.stopRecording(this);
-    }
-
 }

@@ -1,9 +1,10 @@
-package com.michaeltroger.datarecording;
+package com.michaeltroger.datarecording.commands;
 
 import android.util.Log;
 
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.WearableListenerService;
+import com.michaeltroger.datarecording.sensor.SensorUtilities;
 
 public class DatarecordingRemotecontrolListenerService extends WearableListenerService {
 
@@ -19,10 +20,10 @@ public class DatarecordingRemotecontrolListenerService extends WearableListenerS
 
         switch (command) {
             case START_COMMAND:
-                Utilities.startRecording(getApplicationContext());
+                SensorUtilities.startRecording(getApplicationContext());
                 break;
             case STOP_COMMAND:
-                Utilities.stopRecording(getApplicationContext());
+                SensorUtilities.stopRecording(getApplicationContext());
                 break;
             default:
                 throw new UnsupportedOperationException();

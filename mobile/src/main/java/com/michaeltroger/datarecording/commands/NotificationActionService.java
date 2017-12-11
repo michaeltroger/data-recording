@@ -1,11 +1,11 @@
-package com.michaeltroger.datarecording;
+package com.michaeltroger.datarecording.commands;
 
 
 import android.app.IntentService;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
+import com.michaeltroger.datarecording.sensor.SensorUtilities;
 
 
 public class NotificationActionService extends IntentService {
@@ -28,7 +28,7 @@ public class NotificationActionService extends IntentService {
 
         switch (command) {
             case NOTIFICATION_STOP_COMMAND:
-                Utilities.stopRecording(getApplicationContext());
+                SensorUtilities.stopRecording(getApplicationContext());
                 break;
             default:
                 throw new UnsupportedOperationException();

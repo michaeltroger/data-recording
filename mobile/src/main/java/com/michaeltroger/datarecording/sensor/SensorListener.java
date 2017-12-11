@@ -1,4 +1,4 @@
-package com.michaeltroger.datarecording;
+package com.michaeltroger.datarecording.sensor;
 
 import android.content.Context;
 import android.hardware.Sensor;
