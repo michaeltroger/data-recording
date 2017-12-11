@@ -14,11 +14,9 @@ public class SamplingTask extends AsyncTask<Void, Void, Void> {
 
     private static final long SAMPLING_RATE_NANOS = 20000000; // = 50hz
     private static final String TAG = SamplingTask.class.getSimpleName();
-    private final Context context;
     private SensorListener sensorListener;
 
     public SamplingTask(@NonNull final Context context, @NonNull final List<Integer> sensorTypes) {
-        this.context = context;
         sensorListener = new SensorListener(context, sensorTypes);
     }
 
