@@ -5,20 +5,21 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 
-public class SensorRecordingService extends Service implements SensorEventListener {
+import java.util.ArrayList;
+import java.util.List;
+
+public class RecordingService extends Service {
     private static final int NOTIFICATION_ID = 101;
     private static final String NOTIFICATION_TITLE = "Recording data";
     private static final String NOTIFICATION_STOP_TITLE = "Stop";
@@ -27,12 +28,17 @@ public class SensorRecordingService extends Service implements SensorEventListen
     private static final String CHANNEL_NAME = "Data recording";
 
     private NotificationManager notificationManager;
+    private SensorListener sensorListener;
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    public int onStartCommand(final Intent intent, final int flags, final int startId) {
+        final List<Integer> sensorTypes = intent.getIntegerArrayListExtra("sensorTypes");
+
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         startInForeground();
+
+        sensorListener = new SensorListener(this, sensorTypes);
 
         return START_NOT_STICKY;
     }
@@ -81,6 +87,7 @@ public class SensorRecordingService extends Service implements SensorEventListen
     @Override
     public void onDestroy() {
         notificationManager.cancel(NOTIFICATION_ID);
+        sensorListener.cancel();
         super.onDestroy();
     }
 
@@ -90,11 +97,4 @@ public class SensorRecordingService extends Service implements SensorEventListen
         return null;
     }
 
-    @Override
-    public void onSensorChanged(final SensorEvent sensorEvent) {
-
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {}
 }
