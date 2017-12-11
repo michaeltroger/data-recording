@@ -21,12 +21,10 @@ import android.support.v4.app.NotificationCompat;
 public class SensorRecordingService extends Service implements SensorEventListener {
     private static final int NOTIFICATION_ID = 101;
     private static final String NOTIFICATION_TITLE = "Recording data";
+    private static final String NOTIFICATION_STOP_TITLE = "Stop";
 
     private static final String CHANNEL_ID = "com.michaeltroger.datarecording.DATARECORDING";
     private static final String CHANNEL_NAME = "Data recording";
-
-
-    private static final String NOTIFICATION_STOP_TITLE = "Stop";
 
     private NotificationManager notificationManager;
 
