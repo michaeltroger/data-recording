@@ -14,6 +14,7 @@ public class SamplingTask extends AsyncTask<Void, Void, Void> {
 
     private static final long SAMPLING_RATE_NANOS = 20000000; // = 50hz
     private static final String TAG = SamplingTask.class.getSimpleName();
+    private PersistDataTask persistDataTask;
     private SensorListener sensorListener;
 
     public SamplingTask(@NonNull final Context context, @NonNull final List<Integer> sensorTypes) {
@@ -23,8 +24,11 @@ public class SamplingTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
         // TODO: better variable naming
-        long startTime = SystemClock.elapsedRealtimeNanos();
+        final long startTime = SystemClock.elapsedRealtimeNanos();
         long startTimeNanos = SystemClock.elapsedRealtimeNanos();
+
+        persistDataTask = new PersistDataTask();
+        persistDataTask.execute();
 
         while (true) {
             if (isCancelled()) {
@@ -42,8 +46,11 @@ public class SamplingTask extends AsyncTask<Void, Void, Void> {
                     final String key = entry.getKey().toString();
                     final float[] values = entry.getValue();
                     Log.d(TAG,"x:"+values[0] + " y:"+values[1] + " z:"+values[2]);
+
+                    // TODO: do something with sampled data
+                    persistDataTask.addDataToPersist(values);
                 }
-                // TODO: do something with sampled data
+
             }
         }
     }
@@ -51,6 +58,7 @@ public class SamplingTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onCancelled() {
         sensorListener.cancel();
+        persistDataTask.cancel(true);
         super.onCancelled();
     }
 }
