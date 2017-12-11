@@ -13,6 +13,7 @@ public class Utilities {
 
     public static void startRecording(@NonNull final Context context) {
         final ArrayList<Integer> sensorTypes = new ArrayList<>();
+        // TODO: receive wished sensor types from UI
         sensorTypes.add(Sensor.TYPE_ACCELEROMETER);
 
         final Intent intent =  new Intent(context, RecordingService.class);

@@ -8,6 +8,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -28,7 +29,7 @@ public class RecordingService extends Service {
     private static final String CHANNEL_NAME = "Data recording";
 
     private NotificationManager notificationManager;
-    private SensorListener sensorListener;
+    private AsyncTask<Void, Void, Void> samplingTask;
 
     @Override
     public int onStartCommand(final Intent intent, final int flags, final int startId) {
@@ -37,11 +38,11 @@ public class RecordingService extends Service {
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         startInForeground();
-
-        sensorListener = new SensorListener(this, sensorTypes);
+        samplingTask = new SamplingTask(this, sensorTypes).execute();
 
         return START_NOT_STICKY;
     }
+
 
     private void startInForeground() {
         String channelId = null;
@@ -65,7 +66,7 @@ public class RecordingService extends Service {
                 .addAction(R.drawable.ic_launcher_foreground, NOTIFICATION_STOP_TITLE, stopRecordingPendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setCategory(Notification.CATEGORY_SERVICE)
+                .setCategory(NotificationCompat.CATEGORY_SERVICE)
                 .build();
 
         startForeground(NOTIFICATION_ID, notification);
@@ -87,7 +88,7 @@ public class RecordingService extends Service {
     @Override
     public void onDestroy() {
         notificationManager.cancel(NOTIFICATION_ID);
-        sensorListener.cancel();
+        samplingTask.cancel(true);
         super.onDestroy();
     }
 
