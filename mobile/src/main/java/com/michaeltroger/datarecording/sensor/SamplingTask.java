@@ -6,19 +6,23 @@ import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 
 public class SamplingTask extends AsyncTask<Void, Void, Void> {
 
-    private static final long SAMPLING_RATE_NANOS = 20000000; // = 50hz
     private static final String TAG = SamplingTask.class.getSimpleName();
+    private static final long SAMPLING_RATE_NANOS = 20000000; // = 50hz
+
     private PersistDataTask persistDataTask;
     private SensorListener sensorListener;
 
-    public SamplingTask(@NonNull final Context context, @NonNull final List<Integer> sensorTypes) {
+    public SamplingTask(@NonNull final Context context,
+                        @NonNull final List<Integer> sensorTypes) throws IOException {
         sensorListener = new SensorListener(context, sensorTypes);
+        persistDataTask = new PersistDataTask();
     }
 
     @Override
@@ -27,7 +31,6 @@ public class SamplingTask extends AsyncTask<Void, Void, Void> {
         final long startTime = SystemClock.elapsedRealtimeNanos();
         long startTimeNanos = SystemClock.elapsedRealtimeNanos();
 
-        persistDataTask = new PersistDataTask();
         persistDataTask.execute();
 
         while (true) {
@@ -57,8 +60,8 @@ public class SamplingTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onCancelled() {
-        sensorListener.cancel();
         persistDataTask.cancel(true);
+        sensorListener.cancel();
         super.onCancelled();
     }
 }

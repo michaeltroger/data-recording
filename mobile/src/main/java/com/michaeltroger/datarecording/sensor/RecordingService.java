@@ -17,6 +17,7 @@ import android.support.v4.app.NotificationCompat;
 import com.michaeltroger.datarecording.controller.NotificationActionService;
 import com.michaeltroger.datarecording.R;
 
+import java.io.IOException;
 import java.util.List;
 
 public class RecordingService extends Service {
@@ -37,7 +38,13 @@ public class RecordingService extends Service {
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         startInForeground();
-        samplingTask = new SamplingTask(this, sensorTypes).execute();
+        try {
+            samplingTask = new SamplingTask(this, sensorTypes);
+            samplingTask.execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+            stopSelf();
+        }
 
         return START_NOT_STICKY;
     }
@@ -86,8 +93,10 @@ public class RecordingService extends Service {
 
     @Override
     public void onDestroy() {
+        if (samplingTask != null) {
+            samplingTask.cancel(true);
+        }
         notificationManager.cancel(NOTIFICATION_ID);
-        samplingTask.cancel(true);
         super.onDestroy();
     }
 

@@ -4,4 +4,5 @@
     <string name="datarecording_remotecontrol_path_prefix" translatable="false">/datarecording_remotecontrol</string>
     <string name="start">start</string>
     <string name="stop">stop</string>
+    <string name="license_info">License info</string>
 </resources>

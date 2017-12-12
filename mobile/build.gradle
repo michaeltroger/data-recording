@@ -34,4 +34,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     wearApp project(':wear')
     implementation 'com.google.android.gms:play-services-wearable:+'
+
+    compile 'com.michaeltroger.sensorvaluelegend:sensorvaluelegend:1.0.0'
+    compile 'de.psdev.licensesdialog:licensesdialog:1.8.2'
+    compile 'com.opencsv:opencsv:4.1'
 }
