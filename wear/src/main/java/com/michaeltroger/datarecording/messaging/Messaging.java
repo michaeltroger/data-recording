@@ -10,6 +10,7 @@ import com.google.android.gms.wearable.CapabilityApi;
 import com.google.android.gms.wearable.CapabilityInfo;
 import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.Wearable;
+import com.michaeltroger.datarecording.IView;
 
 import java.util.Set;
 
@@ -21,8 +22,10 @@ public class Messaging {
 
     private GoogleApiClient googleApiClient;
     private String transcriptionNodeId;
+    private IView view;
 
-    public Messaging(@NonNull final Context context) {
+    public Messaging(@NonNull final Context context, @NonNull final IView view) {
+        this.view = view;
         googleApiClient = new GoogleApiClient.Builder(context)
                 .addApi(Wearable.API)
                 .build();
@@ -37,6 +40,7 @@ public class Messaging {
 
     public void sendCommandToMobile(@NonNull final String command) {
         if (transcriptionNodeId == null) {
+            view.displayToast("no device connected");
             Log.e(TAG, "Unable to retrieve node with datarecording remotecontrol capability");
             return;
         }
@@ -49,8 +53,10 @@ public class Messaging {
         ).setResultCallback(
                 result -> {
                     if (result.getStatus().isSuccess()) {
+                        view.displayToast("sent msg");
                         Log.d(TAG, "command "+ command+" sent to mobile");
                     } else {
+                        view.displayToast("failed to send msg");
                         Log.e(TAG, "failed to send command "+ command +" to mobile");
                     }
                 }
