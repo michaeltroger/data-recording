@@ -28,7 +28,11 @@ public class MainActivity extends AppCompatActivity {
 
         final ActivityMainBinding binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         binding.setHandlers(new ClickHandlers());
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         requestWriteExternalStoragePermission();
     }
 
@@ -84,11 +88,9 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
-
     }
 
 }
