@@ -24,7 +24,7 @@ public class MainActivity extends WearableActivity implements IView {
         final ActivityMainBinding binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
 
         messaging = new Messaging(this, this);
-        binding.setHandlers(new ClickHandlers(messaging));
+        binding.setHandlers(new ClickHandlers(this));
 
         setAmbientEnabled();
     }
@@ -45,5 +45,10 @@ public class MainActivity extends WearableActivity implements IView {
         }
         toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
         toast.show();
+    }
+
+    @Override
+    public void sendCommand(@NonNull final String command) {
+        messaging.sendCommandToMobile(command);
     }
 }
