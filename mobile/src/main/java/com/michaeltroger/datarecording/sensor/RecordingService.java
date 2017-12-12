@@ -40,7 +40,7 @@ public class RecordingService extends Service {
         startInForeground();
         try {
             samplingTask = new SamplingTask(this, sensorTypes);
-            samplingTask.execute();
+            samplingTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } catch (IOException e) {
             e.printStackTrace();
             stopSelf();

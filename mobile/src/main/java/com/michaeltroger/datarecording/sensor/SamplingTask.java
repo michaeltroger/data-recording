@@ -31,7 +31,7 @@ public class SamplingTask extends AsyncTask<Void, Void, Void> {
         final long startTime = SystemClock.elapsedRealtimeNanos();
         long startTimeNanos = SystemClock.elapsedRealtimeNanos();
 
-        persistDataTask.execute();
+        persistDataTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         while (true) {
             if (isCancelled()) {
