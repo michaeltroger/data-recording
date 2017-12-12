@@ -22,7 +22,7 @@ public class NotificationActionService extends IntentService {
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
+    protected void onHandleIntent(final Intent intent) {
         final String command = intent.getStringExtra(NOTIFICATION_ACTION);
         Log.d(TAG, "Received command "+ command +" from notification action");
 

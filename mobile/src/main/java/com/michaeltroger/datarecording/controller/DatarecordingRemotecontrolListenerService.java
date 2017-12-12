@@ -14,7 +14,7 @@ public class DatarecordingRemotecontrolListenerService extends WearableListenerS
     private static final String STOP_COMMAND = "stop";
 
     @Override
-    public void onMessageReceived(MessageEvent messageEvent) {
+    public void onMessageReceived(final MessageEvent messageEvent) {
         final String command = new String(messageEvent.getData());
         Log.d(TAG, "received " + command + " command from wear");
 

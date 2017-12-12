@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<android.support.wear.widget.BoxInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<data>
+    <variable name="handlers" type="com.michaeltroger.datarecording.controller.ClickHandlers"/>
+</data>
+<android.support.wear.widget.BoxInsetLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -19,19 +22,19 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="start"
+            android:text="@string/start"
             android:id="@+id/start"
             android:layout_gravity="top|center"
-            android:onClick="start"/>
+            android:onClick="@{handlers::start}"/>
 
         <Button
             android:id="@+id/stop"
             android:layout_gravity="bottom|center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="stop"
-            android:text="stop" />
+            android:onClick="@{handlers::stop}"
+            android:text="@string/stop" />
 
     </FrameLayout>
 </android.support.wear.widget.BoxInsetLayout>
-
+</layout>
