@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 <data>
-    <variable name="handlers" type="com.michaeltroger.datarecording.commands.ClickHandlers"/>
+    <variable name="handlers" type="com.michaeltroger.datarecording.controller.ClickHandlers"/>
 </data>
 <android.support.constraint.ConstraintLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"

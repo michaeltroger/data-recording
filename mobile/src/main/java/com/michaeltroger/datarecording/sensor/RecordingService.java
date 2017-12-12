@@ -14,7 +14,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 
-import com.michaeltroger.datarecording.commands.NotificationActionService;
+import com.michaeltroger.datarecording.controller.NotificationActionService;
 import com.michaeltroger.datarecording.R;
 
 import java.util.List;

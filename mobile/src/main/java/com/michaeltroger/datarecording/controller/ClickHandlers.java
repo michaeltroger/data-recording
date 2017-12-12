@@ -1,4 +1,4 @@
-package com.michaeltroger.datarecording.commands;
+package com.michaeltroger.datarecording.controller;
 
 import android.view.View;
 
