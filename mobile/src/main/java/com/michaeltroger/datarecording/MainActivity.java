@@ -1,6 +1,10 @@
 package com.michaeltroger.datarecording;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,6 +20,7 @@ import de.psdev.licensesdialog.LicensesDialog;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -23,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
         final ActivityMainBinding binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         binding.setHandlers(new ClickHandlers());
+
+        requestWriteExternalStoragePermission();
     }
 
     @Override
@@ -44,6 +51,24 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // TODO: enable recording
+                } else {
+
+                   // TODO: disable recording!
+                }
+                break;
+            }
+            default:
+                throw new UnsupportedOperationException();
+        }
+    }
+
     private void showLicenseInfo() {
         new LicensesDialog.Builder(this)
                 .setNotices(R.raw.notices)
@@ -51,4 +76,19 @@ public class MainActivity extends AppCompatActivity {
                 .build()
                 .show();
     }
+
+    private void requestWriteExternalStoragePermission() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+
+
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+
+    }
+
 }
