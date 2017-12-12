@@ -39,21 +39,21 @@ public class SamplingTask extends AsyncTask<Void, Void, Void> {
             }
 
             final long currentTimeNanos = SystemClock.elapsedRealtimeNanos();
+            if (currentTimeNanos < startTimeNanos + SAMPLING_RATE_NANOS) {
+                continue;
+            }
 
-            if (currentTimeNanos >= startTimeNanos + SAMPLING_RATE_NANOS) {
-                startTimeNanos = currentTimeNanos;
-                final float seconds = (currentTimeNanos - startTime) / 1000000000f;
+            startTimeNanos = currentTimeNanos;
+            final float seconds = (currentTimeNanos - startTime) / 1000000000f;
 
-                final ConcurrentMap<String, float[]> sensorData = sensorListener.getSensorData();
-                for (final Map.Entry<String, float[]> entry : sensorData.entrySet()) {
-                    final String key = entry.getKey().toString();
-                    final float[] values = entry.getValue();
-                    Log.d(TAG,"x:"+values[0] + " y:"+values[1] + " z:"+values[2]);
+            final ConcurrentMap<String, float[]> sensorData = sensorListener.getSensorData();
+            for (final Map.Entry<String, float[]> entry : sensorData.entrySet()) {
+                final String key = entry.getKey().toString();
+                final float[] values = entry.getValue();
+                Log.d(TAG,"x:"+values[0] + " y:"+values[1] + " z:"+values[2]);
 
-                    // TODO: do something with sampled data
-                    persistDataTask.addDataToPersist(values);
-                }
-
+                // TODO: do something with sampled data
+                persistDataTask.addDataToPersist(values);
             }
         }
     }

@@ -11,6 +11,7 @@ import com.opencsv.CSVWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.NoSuchElementException;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 // TODO: do the actual implementation
@@ -53,6 +54,10 @@ public class PersistDataTask extends AsyncTask<Void, Void, Void> {
         while (true) {
             if (isCancelled()) {
                 return null;
+            }
+
+            if (valuesQueue.isEmpty()) {
+                continue;
             }
 
             final float[] valuesAsFloat = valuesQueue.remove();
