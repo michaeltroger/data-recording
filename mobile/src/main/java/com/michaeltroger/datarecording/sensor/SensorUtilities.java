@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -15,6 +16,8 @@ import com.michaeltroger.settings.SettingsActivity;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+
+import static android.content.Context.SENSOR_SERVICE;
 
 public class SensorUtilities {
 
@@ -37,10 +40,20 @@ public class SensorUtilities {
     public static Set<Integer> getSensorTypesToRecord(@NonNull final Context context) {
         final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         final Set<String> selections = sharedPref.getStringSet(context.getString(R.string.pref_key_sensor_list), new HashSet<>());
-        final Set<Integer> selectionsInt = new HashSet<>();
-        for (String selection : selections) {
-            selectionsInt.add(Integer.valueOf(selection));
+        final Set<Integer> selectedSensorTypes = new HashSet<>();
+
+        final SensorManager sensorManager = (SensorManager) context.getSystemService(SENSOR_SERVICE);
+
+        for (final String selection : selections) {
+            int sensorType = Integer.valueOf(selection);
+            if (isSensorStillAvailable(sensorManager, sensorType)) {
+                selectedSensorTypes.add(sensorType);
+            }
         }
-        return selectionsInt;
+        return selectedSensorTypes;
+    }
+
+    private static boolean isSensorStillAvailable(final SensorManager sensorManager, final int sensorType) {
+        return sensorManager.getDefaultSensor(sensorType) != null;
     }
 }
