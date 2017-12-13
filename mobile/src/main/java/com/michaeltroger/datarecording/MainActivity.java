@@ -1,6 +1,7 @@
 package com.michaeltroger.datarecording;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.support.v4.app.ActivityCompat;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 
 import com.michaeltroger.datarecording.controller.ClickHandlers;
 import com.michaeltroger.datarecording.databinding.ActivityMainBinding;
+import com.michaeltroger.settings.SettingsActivity;
 
 import de.psdev.licensesdialog.LicensesDialog;
 
@@ -46,6 +48,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.settings:
+                final Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
             case R.id.license_info:
                 showLicenseInfo();
                 return true;
