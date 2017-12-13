@@ -19,7 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.michaeltroger.settings.SettingsActivity" />
+        <activity android:name="com.michaeltroger.settings.SettingsActivity"
+            android:parentActivityName=".MainActivity"/>
 
         <service android:name=".controller.DatarecordingRemotecontrolListenerService" >
             <intent-filter>
