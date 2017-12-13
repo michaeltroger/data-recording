@@ -1,29 +1,47 @@
 package com.michaeltroger.settings;
 
 import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.preference.MultiSelectListPreference;
 import android.util.AttributeSet;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
+import static android.content.Context.SENSOR_SERVICE;
+
 public class SensorListPreference extends MultiSelectListPreference {
 
+
+    private final SensorManager sensorManager;
+    final List<CharSequence> entries;
+    final List<CharSequence> entryValues;
 
     public SensorListPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        final List<CharSequence> entries = new ArrayList<>();
-        final List<CharSequence> entryValues = new ArrayList<>();
+        entries = new ArrayList<>();
+        entryValues = new ArrayList<>();
 
-        entries.add("test");
-        entries.add("test1");
+        sensorManager = (SensorManager) context.getSystemService(SENSOR_SERVICE);
 
-
-        entryValues.add("test");
-        entryValues.add("test");
-
+        addSensorToList(sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
+        addSensorToList(sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION));
+        addSensorToList(sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE));
+        addSensorToList(sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD));
+        addSensorToList(sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE));
+        
         setEntries(entries.toArray(new CharSequence[]{}));
         setEntryValues(entryValues.toArray(new CharSequence[]{}));
+    }
+
+    private void addSensorToList(@Nullable final Sensor sensor) {
+        if (sensor != null) {
+            entryValues.add(sensor.getStringType());
+            entries.add(sensor.getName());
+        }
     }
 }
