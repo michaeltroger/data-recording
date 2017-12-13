@@ -5,7 +5,7 @@
 
     <item android:id="@+id/settings"
         android:title="@string/license_info"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_settings_white_24px"
         app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/license_info"
