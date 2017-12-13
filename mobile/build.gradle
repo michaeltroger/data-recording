@@ -38,5 +38,4 @@ dependencies {
 
     compile 'com.michaeltroger.sensorvaluelegend:sensorvaluelegend:1.0.0'
     compile 'de.psdev.licensesdialog:licensesdialog:1.8.2'
-    compile 'com.opencsv:opencsv:4.1'
 }

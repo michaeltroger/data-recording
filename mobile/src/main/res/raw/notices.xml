@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <notices>
-    <notice>
-        <name>opencsv</name>
-        <url>http://opencsv.sourceforge.net/</url>
-        <license>Apache Software License 2.0</license>
-    </notice>
+
 </notices>
