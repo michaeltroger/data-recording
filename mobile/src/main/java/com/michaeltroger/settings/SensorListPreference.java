@@ -35,6 +35,7 @@ public class SensorListPreference extends MultiSelectListPreference {
 
         setEntries(entries.toArray(new CharSequence[]{}));
         setEntryValues(entryValues.toArray(new CharSequence[]{}));
+        setDefaultValue(String.valueOf(Sensor.TYPE_ACCELEROMETER));
     }
 
     private void addSensorToList(@Nullable final Sensor sensor) {

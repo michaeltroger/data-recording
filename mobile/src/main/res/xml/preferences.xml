@@ -8,10 +8,9 @@
         android:defaultValue="@array/pref_default_value_sensor_list"/>
 
     <EditTextPreference
-        android:defaultValue="50"
+        android:defaultValue="@string/pref_default_sampling_rate"
         android:key="@string/pref_key_sampling_rate"
         android:inputType="number"
         android:title="@string/pref_title_sampling_rate"
-        android:summary="@string/pref_summary_sampling_rate"
-        />
+        android:summary="@string/pref_summary_sampling_rate"/>
 </PreferenceScreen>

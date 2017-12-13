@@ -7,19 +7,22 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 
 public class SamplingTask extends AsyncTask<Void, Void, Void> {
 
     private static final String TAG = SamplingTask.class.getSimpleName();
-    private static final long SAMPLING_RATE_NANOS = 20000000; // = 50hz
+    private static final long ONE_SECOND_IN_NANOS = 1000000000;
 
     private PersistDataTask persistDataTask;
     private SensorListener sensorListener;
+    private final long samplingIntervalNanoSeconds;
 
     public SamplingTask(@NonNull final Context context) throws IOException {
+        final int samplingRateInHerz = SensorUtilities.getSamplingRateInHerz(context);
+
+        samplingIntervalNanoSeconds = Math.round((float)ONE_SECOND_IN_NANOS / samplingRateInHerz);
         sensorListener = new SensorListener(context);
         persistDataTask = new PersistDataTask();
     }
@@ -38,12 +41,12 @@ public class SamplingTask extends AsyncTask<Void, Void, Void> {
             }
 
             final long currentTimeNanos = SystemClock.elapsedRealtimeNanos();
-            if (currentTimeNanos < startTimeNanos + SAMPLING_RATE_NANOS) {
+            if (currentTimeNanos < startTimeNanos + samplingIntervalNanoSeconds) {
                 continue;
             }
 
             startTimeNanos = currentTimeNanos;
-            final float seconds = (currentTimeNanos - startTime) / 1000000000f;
+            final float seconds = (currentTimeNanos - startTime) / (float)ONE_SECOND_IN_NANOS;
 
             final ConcurrentMap<String, float[]> sensorData = sensorListener.getSensorData();
             for (final Map.Entry<String, float[]> entry : sensorData.entrySet()) {

@@ -3,17 +3,13 @@ package com.michaeltroger.datarecording.sensor;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 
 import com.michaeltroger.datarecording.R;
-import com.michaeltroger.datarecording.sensor.RecordingService;
-import com.michaeltroger.settings.SettingsActivity;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -55,5 +51,16 @@ public class SensorUtilities {
 
     private static boolean isSensorStillAvailable(final SensorManager sensorManager, final int sensorType) {
         return sensorManager.getDefaultSensor(sensorType) != null;
+    }
+
+    public static int getSamplingRateInHerz(@NonNull final Context context) {
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+
+        final String samplingRate = sharedPref.getString(
+                context.getString(R.string.pref_key_sampling_rate),
+                context.getString(R.string.pref_default_sampling_rate)
+        );
+
+        return Integer.valueOf(samplingRate);
     }
 }
