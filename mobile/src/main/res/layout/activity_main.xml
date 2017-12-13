@@ -1,37 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 <data>
     <variable name="handlers" type="com.michaeltroger.datarecording.controller.ClickHandlers"/>
 </data>
 <android.support.constraint.ConstraintLayout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.michaeltroger.datarecording.MainActivity">
 
     <Button
-        android:layout_width="0dp"
-        app:layout_constraintHorizontal_weight="1"
+        android:id="@+id/start"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="10dp"
         android:onClick="@{handlers::start}"
         android:text="@string/start"
-        android:id="@+id/start"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/stop"
-        android:layout_width="0dp"
-        app:layout_constraintHorizontal_weight="1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="@{handlers::stop}"
         android:text="@string/stop"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="@+id/start"
         app:layout_constraintStart_toStartOf="@+id/start"
         app:layout_constraintTop_toBottomOf="@+id/start" />
+
+    <View
+        android:id="@+id/tile_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stop" />
 
 </android.support.constraint.ConstraintLayout>
 </layout>

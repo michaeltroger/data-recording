@@ -5,4 +5,5 @@
     <string name="start">start</string>
     <string name="stop">stop</string>
     <string name="license_info">License info</string>
+    <string name="settings">Settings</string>
 </resources>
