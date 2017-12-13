@@ -15,7 +15,6 @@ import static android.content.Context.SENSOR_SERVICE;
 
 public class SensorListPreference extends MultiSelectListPreference {
 
-
     private final SensorManager sensorManager;
     final List<CharSequence> entries;
     final List<CharSequence> entryValues;
@@ -33,15 +32,16 @@ public class SensorListPreference extends MultiSelectListPreference {
         addSensorToList(sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE));
         addSensorToList(sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD));
         addSensorToList(sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE));
-        
+
         setEntries(entries.toArray(new CharSequence[]{}));
         setEntryValues(entryValues.toArray(new CharSequence[]{}));
     }
 
     private void addSensorToList(@Nullable final Sensor sensor) {
-        if (sensor != null) {
-            entryValues.add(sensor.getStringType());
-            entries.add(sensor.getName());
+        if (sensor == null) {
+            return;
         }
+        entryValues.add(String.valueOf(sensor.getType()));
+        entries.add(sensor.getName());
     }
 }

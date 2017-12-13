@@ -33,13 +33,11 @@ public class RecordingService extends Service {
 
     @Override
     public int onStartCommand(final Intent intent, final int flags, final int startId) {
-        final List<Integer> sensorTypes = intent.getIntegerArrayListExtra("sensorTypes");
-
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         startInForeground();
         try {
-            samplingTask = new SamplingTask(this, sensorTypes);
+            samplingTask = new SamplingTask(this);
             samplingTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } catch (IOException e) {
             e.printStackTrace();

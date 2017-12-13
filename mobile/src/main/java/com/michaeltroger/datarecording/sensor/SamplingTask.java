@@ -19,9 +19,8 @@ public class SamplingTask extends AsyncTask<Void, Void, Void> {
     private PersistDataTask persistDataTask;
     private SensorListener sensorListener;
 
-    public SamplingTask(@NonNull final Context context,
-                        @NonNull final List<Integer> sensorTypes) throws IOException {
-        sensorListener = new SensorListener(context, sensorTypes);
+    public SamplingTask(@NonNull final Context context) throws IOException {
+        sensorListener = new SensorListener(context);
         persistDataTask = new PersistDataTask();
     }
 
