@@ -1,17 +1,30 @@
 package com.michaeltroger.datarecording.sensor;
 
 
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.michaeltroger.sensorvaluelegend.SensorValueLegend;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ConcurrentMap;
+
+import static android.content.Context.SENSOR_SERVICE;
 
 // TODO: do the actual implementation
 public class PersistDataTask extends AsyncTask<Void, Void, Void> {
@@ -21,12 +34,14 @@ public class PersistDataTask extends AsyncTask<Void, Void, Void> {
     private static final String TAG = PersistDataTask.class.getSimpleName();
     private static final String COMMA_DELIMITER = ",";
     private static final String NEW_LINE_SEPARATOR = "\n";
+    private final List<String> labels;
 
     private List<FileWriter> fileWriters;
 
-    private ConcurrentLinkedQueue<float[]> valuesQueue = new ConcurrentLinkedQueue<>();
+    private ConcurrentLinkedQueue<Map<String,float[]>> valuesQueue = new ConcurrentLinkedQueue<>();
 
-    public PersistDataTask() throws IOException {
+    public PersistDataTask(final List<String> labels) throws IOException {
+        this.labels = labels;
         createFileWriters();
         writeStaticSampleInfosIntoFile();
     }
@@ -39,14 +54,10 @@ public class PersistDataTask extends AsyncTask<Void, Void, Void> {
 
         final String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
 
-        List<String> sensors = new ArrayList<>();
-        sensors.add("accX");
-        sensors.add("accY");
-
         fileWriters = new ArrayList<>();
 
-        for (final String sensor : sensors) {
-            final String fileName = sensor+FILE_EXTENSION;
+        for (final String label : labels) {
+            final String fileName = label+FILE_EXTENSION;
             final String filePath = baseDir + File.separator + APP_DIRECTORY + File.separator + fileName;
 
             final File file = new File(filePath);
@@ -60,9 +71,8 @@ public class PersistDataTask extends AsyncTask<Void, Void, Void> {
             fileWriters.add(fileWriter);
 
         }
-        // TODO: dynamically choose file
-
     }
+
 
     private void writeStaticSampleInfosIntoFile() {
         for (final FileWriter fileWriter : fileWriters) {
@@ -90,16 +100,22 @@ public class PersistDataTask extends AsyncTask<Void, Void, Void> {
                 continue;
             }
 
-            final float[] valuesAsFloat = valuesQueue.remove();
+            final Map<String, float[]> valuesMap = valuesQueue.remove();
             Log.d(TAG, "persisting data");
-            for (int i = 0; i < fileWriters.size(); i++) {
-                try {
-                    fileWriters.get(i).append(COMMA_DELIMITER);
-                    fileWriters.get(i).append(String.valueOf(valuesAsFloat[i]));
-                } catch (IOException e) {
-                    e.printStackTrace();
+
+            int i = 0;
+            for (final Map.Entry<String, float[]> entries : valuesMap.entrySet()) {
+                for (final float entry : entries.getValue()) {
+                    try {
+                        fileWriters.get(i).append(COMMA_DELIMITER);
+                        fileWriters.get(i).append(String.valueOf(entry));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    i++;
                 }
             }
+
         }
     }
 
@@ -116,7 +132,7 @@ public class PersistDataTask extends AsyncTask<Void, Void, Void> {
         super.onCancelled();
     }
 
-    public void addDataToPersist(@NonNull final float[] values) {
+    public void addDataToPersist(@NonNull final Map<String, float[]> values) {
         valuesQueue.add(values);
     }
 }

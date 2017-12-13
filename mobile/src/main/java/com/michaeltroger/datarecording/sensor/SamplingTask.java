@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 
@@ -24,7 +25,9 @@ public class SamplingTask extends AsyncTask<Void, Void, Void> {
 
         samplingIntervalNanoSeconds = Math.round((float)ONE_SECOND_IN_NANOS / samplingRateInHerz);
         sensorListener = new SensorListener(context);
-        persistDataTask = new PersistDataTask();
+        final List<String> labels = sensorListener.getLabels();
+
+        persistDataTask = new PersistDataTask(labels);
     }
 
     @Override
@@ -48,15 +51,8 @@ public class SamplingTask extends AsyncTask<Void, Void, Void> {
             startTimeNanos = currentTimeNanos;
             final float seconds = (currentTimeNanos - startTime) / (float)ONE_SECOND_IN_NANOS;
 
-            final ConcurrentMap<String, float[]> sensorData = sensorListener.getSensorData();
-            for (final Map.Entry<String, float[]> entry : sensorData.entrySet()) {
-                final String key = entry.getKey().toString();
-                final float[] values = entry.getValue();
-                Log.d(TAG,"x:"+values[0] + " y:"+values[1] + " z:"+values[2]);
-
-                // TODO: do something with sampled data
-                persistDataTask.addDataToPersist(values);
-            }
+            final Map<String, float[]> sensorData = sensorListener.getSensorData();
+            persistDataTask.addDataToPersist(sensorData);
         }
     }
 

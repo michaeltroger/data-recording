@@ -10,10 +10,15 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.michaeltroger.sensorvaluelegend.SensorValueLegend;
 import com.michaeltroger.settings.SettingsActivity;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -24,11 +29,14 @@ public class SensorListener implements SensorEventListener {
 
     private static final String TAG = SensorListener.class.getSimpleName();
 
-    private final ConcurrentMap<String, float[]> cachedSensorValues = new ConcurrentHashMap<>();
+    private final Map<String, float[]> cachedSensorValues = new LinkedHashMap<>();
     private final SensorManager sensorManager;
+    private final List<String> labels;
 
     public SensorListener(@NonNull final Context context) {
         sensorManager = (SensorManager) context.getSystemService(SENSOR_SERVICE);
+
+        labels = new ArrayList<>();
 
         final Set<Integer> sensorTypes = SensorUtilities.getSensorTypesToRecord(context);
 
@@ -36,11 +44,24 @@ public class SensorListener implements SensorEventListener {
             final Sensor sensor = sensorManager.getDefaultSensor(sensorType);
             sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_FASTEST);
             Log.d(TAG,"registered" + sensor.toString());
+
+            final String[] legend = SensorValueLegend.getLegend(sensor.getType());
+            labels.addAll(Arrays.asList(legend));
+
+            final float[] fl = new float[legend.length];
+            for (int i = 0; i < fl.length; i++) {
+                fl[i] = Float.MIN_VALUE;
+            }
+            cachedSensorValues.put(sensor.getName(), fl);
         }
     }
 
-    public ConcurrentMap<String, float[]> getSensorData() {
-        return cachedSensorValues;
+    public List<String> getLabels() {
+        return labels;
+    }
+
+    public Map<String, float[]> getSensorData() {
+        return new LinkedHashMap<>(cachedSensorValues);
     }
 
     public void cancel() {
