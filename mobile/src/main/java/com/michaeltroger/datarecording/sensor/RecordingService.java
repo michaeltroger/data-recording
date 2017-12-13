@@ -67,7 +67,7 @@ public class RecordingService extends Service {
         final NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelId);
         final Notification notification = notificationBuilder
                 .setOngoing(true)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.ic_reorder_white_24px)
                 .setContentTitle(NOTIFICATION_TITLE)
                 .addAction(R.drawable.ic_launcher_foreground, NOTIFICATION_STOP_TITLE, stopRecordingPendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
