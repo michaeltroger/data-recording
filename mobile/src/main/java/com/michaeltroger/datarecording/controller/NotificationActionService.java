@@ -14,9 +14,6 @@ public class NotificationActionService extends IntentService {
     public static final String NOTIFICATION_ACTION = "command";
     public static final String NOTIFICATION_STOP_COMMAND = "stop";
 
-    public NotificationActionService(String name) {
-        super(name);
-    }
     public NotificationActionService() {
         super("NotificationAction");
     }

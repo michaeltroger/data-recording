@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <CheckBoxPreference
-        android:key="pref_sync"
-        android:title="testtitle"
-        android:summary="testtext"
-        android:defaultValue="true" />
+
+    <com.michaeltroger.settings.SensorListPreference
+        android:key="@string/pref_key_sensor_list"
+        android:summary="@string/pref_summary_sensors_list"
+        android:title="@string/pref_title_sensors_to_use"
+        android:defaultValue="@array/pref_default_value_sensor_list"/>
+
+    <EditTextPreference
+        android:defaultValue="50"
+        android:key="@string/pref_key_sampling_rate"
+        android:inputType="number"
+        android:title="@string/pref_title_sampling_rate"
+        android:summary="@string/pref_summary_sampling_rate"
+        />
 </PreferenceScreen>

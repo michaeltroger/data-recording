@@ -2,6 +2,9 @@
     <string name="app_name">Data Recording</string>
 
     <string name="datarecording_remotecontrol_path_prefix" translatable="false">/datarecording_remotecontrol</string>
+    <string name="pref_key_sensor_list" translatable="false">sensor_list_key</string>
+    <string name="pref_key_sampling_rate" translatable="false">pref_key_sampling_rate</string>
+
     <string name="start">start</string>
     <string name="stop">stop</string>
     <string name="license_info">License info</string>
@@ -9,4 +12,9 @@
     <string name="person_id">Person ID</string>
     <string name="location">Location</string>
     <string name="class_label">Class Label</string>
+    <string name="pref_summary_sensors_list">Choose which sensors to use for recording.</string>
+    <string name="pref_title_sensors_to_use">Sensors to use</string>
+    <string name="pref_title_sampling_rate">Sampling rate</string>
+    <string name="pref_summary_sampling_rate">Sampling rate in Herz</string>
+
 </resources>
