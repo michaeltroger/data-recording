@@ -6,4 +6,7 @@
     <string name="stop">stop</string>
     <string name="license_info">License info</string>
     <string name="settings">Settings</string>
+    <string name="person_id">Person ID</string>
+    <string name="location">Location</string>
+    <string name="class_label">Class label</string>
 </resources>
