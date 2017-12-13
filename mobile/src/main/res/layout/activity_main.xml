@@ -11,7 +11,8 @@
     tools:context="com.michaeltroger.datarecording.MainActivity">
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="1"
         android:layout_height="wrap_content"
         android:onClick="@{handlers::start}"
         android:text="@string/start"
@@ -22,10 +23,12 @@
 
     <Button
         android:id="@+id/stop"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="1"
         android:layout_height="wrap_content"
         android:onClick="@{handlers::stop}"
         android:text="@string/stop"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="@+id/start"
         app:layout_constraintStart_toStartOf="@+id/start"
         app:layout_constraintTop_toBottomOf="@+id/start" />
