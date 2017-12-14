@@ -106,20 +106,23 @@ public class PersistDataTask extends AsyncTask<Void, Void, Void> {
             int i = 0;
             for (final Map.Entry<String, float[]> entries : valuesMap.entrySet()) {
                 for (final float f : entries.getValue()) {
-                    final String toAppend;
-                    if (f == Float.MIN_VALUE || f == 0) {
-                        continue;
+                    try {
+                        if (f == 0) { // if Sensor.TYPE_PRESSURE the float[] will have size 3 but only first index has value -> ignore the rest
+                            continue;
+                        } else if (f == Float.MIN_VALUE) { // if we didn't receive sensor data yet
+                            fileWriters.get(i).append(COMMA_DELIMITER);
+                            fileWriters.get(i).append("");
+                        } else {
+                            fileWriters.get(i).append(COMMA_DELIMITER);
+                            fileWriters.get(i).append(String.valueOf(f));
+                        }
+
+                        i++;
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-//                    try {
-//                        fileWriters.get(i).append(COMMA_DELIMITER);
-//                        fileWriters.get(i).append(String.valueOf(f));
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-                    i++;
                 }
             }
-            Log.d(TAG, fileWriters.size() + " : " + i);
 
         }
     }
