@@ -57,6 +57,7 @@ public class PersistDataTask extends AsyncTask<Void, Void, Void> {
         fileWriters = new ArrayList<>();
 
         for (final String label : labels) {
+            Log.d(TAG, label);
             final String fileName = label+FILE_EXTENSION;
             final String filePath = baseDir + File.separator + APP_DIRECTORY + File.separator + fileName;
 
@@ -101,20 +102,24 @@ public class PersistDataTask extends AsyncTask<Void, Void, Void> {
             }
 
             final Map<String, float[]> valuesMap = valuesQueue.remove();
-            Log.d(TAG, "persisting data");
 
             int i = 0;
             for (final Map.Entry<String, float[]> entries : valuesMap.entrySet()) {
-                for (final float entry : entries.getValue()) {
-                    try {
-                        fileWriters.get(i).append(COMMA_DELIMITER);
-                        fileWriters.get(i).append(String.valueOf(entry));
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                for (final float f : entries.getValue()) {
+                    final String toAppend;
+                    if (f == Float.MIN_VALUE || f == 0) {
+                        continue;
                     }
+//                    try {
+//                        fileWriters.get(i).append(COMMA_DELIMITER);
+//                        fileWriters.get(i).append(String.valueOf(f));
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
                     i++;
                 }
             }
+            Log.d(TAG, fileWriters.size() + " : " + i);
 
         }
     }

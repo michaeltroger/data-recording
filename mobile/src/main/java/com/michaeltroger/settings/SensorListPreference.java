@@ -28,7 +28,7 @@ public class SensorListPreference extends MultiSelectListPreference {
         sensorManager = (SensorManager) context.getSystemService(SENSOR_SERVICE);
 
         addSensorToList(sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
-        addSensorToList(sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION));
+        //addSensorToList(sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION)); TODO: causes unknownType10 with Legend Lib
         addSensorToList(sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE));
         addSensorToList(sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD));
         addSensorToList(sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE));
