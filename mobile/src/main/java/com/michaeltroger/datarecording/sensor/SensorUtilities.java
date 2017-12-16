@@ -33,6 +33,7 @@ public class SensorUtilities {
     }
 
 
+    @NonNull
     public static Set<Integer> getSensorTypesToRecord(@NonNull final Context context) {
         final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         final Set<String> selections = sharedPref.getStringSet(context.getString(R.string.pref_key_sensor_list), new HashSet<>());
@@ -64,21 +65,4 @@ public class SensorUtilities {
         return Integer.valueOf(samplingRate);
     }
 
-    @NonNull
-    public static String getLocation(@NonNull final Context context) {
-        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPref.getString(context.getString(R.string.pref_key_location),"");
-    }
-
-    @NonNull
-    public static String getPerson(@NonNull final Context context) {
-        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPref.getString(context.getString(R.string.pref_key_person),"");
-    }
-
-    @NonNull
-    public static String getClassLabel(@NonNull final Context context) {
-        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPref.getString(context.getString(R.string.pref_key_class_label),"");
-    }
 }

@@ -25,10 +25,7 @@ public class SamplingTask extends AsyncTask<Void, Void, Void> {
 
         samplingIntervalNanoSeconds = Math.round((float)ONE_SECOND_IN_NANOS / samplingRateInHerz);
         sensorListener = new SensorListener(context);
-        final List<String> labels = sensorListener.getLabels();
-
-
-        persistDataTask = new PersistDataTask(labels);
+        persistDataTask = new PersistDataTask(context, sensorListener.getLabels());
     }
 
     @Override

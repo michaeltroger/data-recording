@@ -1,33 +1,21 @@
 package com.michaeltroger.datarecording.sensor;
 
 
-import android.content.SharedPreferences;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.michaeltroger.datarecording.MainActivity;
-import com.michaeltroger.sensorvaluelegend.SensorValueLegend;
+import com.michaeltroger.settings.MetaDataPreferenceUtilities;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.ConcurrentMap;
-
-import static android.content.Context.SENSOR_SERVICE;
 
 // TODO: do the actual implementation
 public class PersistDataTask extends AsyncTask<Void, Void, Void> {
@@ -43,10 +31,10 @@ public class PersistDataTask extends AsyncTask<Void, Void, Void> {
 
     private ConcurrentLinkedQueue<Map<String,float[]>> valuesQueue = new ConcurrentLinkedQueue<>();
 
-    public PersistDataTask(final List<String> labels) throws IOException {
+    public PersistDataTask(@NonNull final Context context, final List<String> labels) throws IOException {
         this.labels = labels;
         createFileWriters();
-        writeStaticSampleInfosIntoFile();
+        writeStaticSampleInfosIntoFile(context);
     }
 
     private void createFileWriters() throws IOException {
@@ -78,15 +66,14 @@ public class PersistDataTask extends AsyncTask<Void, Void, Void> {
     }
 
 
-    private void writeStaticSampleInfosIntoFile() {
+    private void writeStaticSampleInfosIntoFile(@NonNull final Context context) {
         for (final FileWriter fileWriter : fileWriters) {
             try {
-                // TODO: get data from user input
-                fileWriter.append("room");
+                fileWriter.append(MetaDataPreferenceUtilities.getClassLabel(context));
                 fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append("martina");
+                fileWriter.append(MetaDataPreferenceUtilities.getPerson(context));
                 fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append("hagenberg");
+                fileWriter.append(MetaDataPreferenceUtilities.getLocation(context));
             } catch (IOException e) {
                 e.printStackTrace();
             }
