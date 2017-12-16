@@ -67,13 +67,20 @@ public class PersistDataTask extends AsyncTask<Void, Void, Void> {
 
 
     private void writeStaticSampleInfosIntoFile(@NonNull final Context context) {
+        final String classLabel = MetaDataPreferenceUtilities.getClassLabel(context);
+        final String sampleNr = String.valueOf(MetaDataPreferenceUtilities.getSampleNr(context));
+        final String person = MetaDataPreferenceUtilities.getPerson(context);
+        final String location = MetaDataPreferenceUtilities.getLocation(context);
+        
         for (final FileWriter fileWriter : fileWriters) {
             try {
-                fileWriter.append(MetaDataPreferenceUtilities.getClassLabel(context));
+                fileWriter.append(classLabel);
                 fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(MetaDataPreferenceUtilities.getPerson(context));
+                fileWriter.append(sampleNr);
                 fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(MetaDataPreferenceUtilities.getLocation(context));
+                fileWriter.append(person);
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(location);
             } catch (IOException e) {
                 e.printStackTrace();
             }

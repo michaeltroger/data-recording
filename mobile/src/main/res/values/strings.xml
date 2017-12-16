@@ -4,6 +4,7 @@
     <string name="datarecording_remotecontrol_path_prefix" translatable="false">/datarecording_remotecontrol</string>
     <string name="pref_key_sensor_list" translatable="false">sensor_list_key</string>
     <string name="pref_key_sampling_rate" translatable="false">pref_key_sampling_rate</string>
+    <string name="pref_key_sampling_number" translatable="false">pref_key_sampling_number</string>
     <string name="pref_key_class_label" translatable="false">pref_key_class_label</string>
     <string name="pref_key_person" translatable="false">pref_key_person</string>
     <string name="pref_key_location" translatable="false">pref_key_location</string>

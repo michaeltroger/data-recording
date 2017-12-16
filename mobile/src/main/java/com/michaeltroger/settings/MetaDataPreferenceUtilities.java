@@ -26,4 +26,21 @@ public class MetaDataPreferenceUtilities {
         final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPref.getString(context.getString(R.string.pref_key_class_label),"");
     }
+
+    public static int getSampleNr(@NonNull final Context context) {
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+
+        final int lastSampleNr = sharedPref.getInt(
+                context.getString(R.string.pref_key_sampling_number),
+                0
+        );
+
+        final int sampleNr = lastSampleNr + 1;
+        sharedPref.edit().putInt(
+                context.getString(R.string.pref_key_sampling_number),
+                sampleNr
+        ).apply();
+
+        return sampleNr;
+    }
 }
