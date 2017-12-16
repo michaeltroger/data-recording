@@ -13,4 +13,10 @@
         android:inputType="number"
         android:title="@string/pref_title_sampling_rate"
         android:summary="@string/pref_summary_sampling_rate"/>
+
+    <EditTextPreference
+        android:inputType="number"
+        android:key="@string/pref_key_sampling_number"
+        android:title="Sample number"
+        android:summary="The sample number to use"/>
 </PreferenceScreen>

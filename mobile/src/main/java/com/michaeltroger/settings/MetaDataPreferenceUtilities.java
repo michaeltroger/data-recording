@@ -30,15 +30,15 @@ public class MetaDataPreferenceUtilities {
     public static int getSampleNr(@NonNull final Context context) {
         final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
 
-        final int lastSampleNr = sharedPref.getInt(
+        final int sampleNr = Integer.valueOf(sharedPref.getString(
                 context.getString(R.string.pref_key_sampling_number),
-                0
-        );
+                "1"
+        ));
 
-        final int sampleNr = lastSampleNr + 1;
-        sharedPref.edit().putInt(
+        final int nextSampleNr = sampleNr + 1;
+        sharedPref.edit().putString(
                 context.getString(R.string.pref_key_sampling_number),
-                sampleNr
+                String.valueOf(nextSampleNr)
         ).apply();
 
         return sampleNr;
