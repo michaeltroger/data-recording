@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -18,6 +19,8 @@ import static android.content.Context.SENSOR_SERVICE;
 public class SensorUtilities {
 
     public static void startRecording(@NonNull final Context context) {
+        MediaPlayer.create(context, R.raw.start).start();
+
         final Intent intent =  new Intent(context, RecordingService.class);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -28,6 +31,8 @@ public class SensorUtilities {
     }
 
     public static void stopRecording(@NonNull final Context context) {
+        MediaPlayer.create(context, R.raw.end).start();
+
         final Intent intent =  new Intent(context, RecordingService.class);
         context.stopService(intent);
     }
