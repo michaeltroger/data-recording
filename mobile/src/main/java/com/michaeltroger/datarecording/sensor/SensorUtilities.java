@@ -10,11 +10,7 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 
-import com.michaeltroger.datarecording.MessageEvent;
-import com.michaeltroger.datarecording.Mode;
 import com.michaeltroger.datarecording.R;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -27,8 +23,6 @@ public class SensorUtilities {
         if (isRecordingActive(context)) {
             return;
         }
-        EventBus.getDefault().post(new MessageEvent(Mode.RECORDING));
-        MediaPlayer.create(context, R.raw.start).start();
 
         final Intent intent =  new Intent(context, RecordingService.class);
 
@@ -43,12 +37,9 @@ public class SensorUtilities {
         if (!isRecordingActive(context)) {
             return;
         }
-        MediaPlayer.create(context, R.raw.end).start();
 
         final Intent intent =  new Intent(context, RecordingService.class);
         context.stopService(intent);
-
-        EventBus.getDefault().post(new MessageEvent(Mode.STANDBY));
     }
 
 
@@ -63,9 +54,13 @@ public class SensorUtilities {
     }
 
     @NonNull
-    public static Set<Integer> getSensorTypesToRecord(@NonNull final Context context) {
+    public static Set<Integer> getSensorTypesToRecord(@NonNull final Context context) throws NoSensorChosenException {
         final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         final Set<String> selections = sharedPref.getStringSet(context.getString(R.string.pref_key_sensor_list), new HashSet<>());
+        if (selections.isEmpty()) {
+            throw new NoSensorChosenException();
+        }
+
         final Set<Integer> selectedSensorTypes = new HashSet<>();
 
         final SensorManager sensorManager = (SensorManager) context.getSystemService(SENSOR_SERVICE);

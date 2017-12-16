@@ -4,12 +4,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentMap;
 
 public class SamplingTask extends AsyncTask<Void, Void, Void> {
 
@@ -20,7 +17,7 @@ public class SamplingTask extends AsyncTask<Void, Void, Void> {
     private SensorListener sensorListener;
     private final long samplingIntervalNanoSeconds;
 
-    public SamplingTask(@NonNull final Context context) throws IOException {
+    public SamplingTask(@NonNull final Context context) throws IOException, NoSensorChosenException {
         final int samplingRateInHerz = SensorUtilities.getSamplingRateInHerz(context);
 
         samplingIntervalNanoSeconds = Math.round((float)ONE_SECOND_IN_NANOS / samplingRateInHerz);

@@ -7,18 +7,23 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
+import android.widget.Toast;
 
+import com.michaeltroger.datarecording.MessageEvent;
+import com.michaeltroger.datarecording.Mode;
 import com.michaeltroger.datarecording.controller.NotificationActionService;
 import com.michaeltroger.datarecording.R;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.IOException;
-import java.util.List;
 
 public class RecordingService extends Service {
     private static final int NOTIFICATION_ID = 101;
@@ -33,14 +38,19 @@ public class RecordingService extends Service {
 
     @Override
     public int onStartCommand(final Intent intent, final int flags, final int startId) {
+        EventBus.getDefault().post(new MessageEvent(Mode.RECORDING));
+        MediaPlayer.create(this, R.raw.start).start();
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         startInForeground();
         try {
             samplingTask = new SamplingTask(this);
             samplingTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } catch (NoSensorChosenException e) {
+            Toast.makeText(this, "No sensor chosen", Toast.LENGTH_SHORT).show();
+            stopSelf();
         } catch (IOException e) {
-            e.printStackTrace();
+            Toast.makeText(this, "Not able to write to filesystem", Toast.LENGTH_SHORT).show();
             stopSelf();
         }
 
@@ -95,6 +105,9 @@ public class RecordingService extends Service {
             samplingTask.cancel(true);
         }
         notificationManager.cancel(NOTIFICATION_ID);
+
+        EventBus.getDefault().post(new MessageEvent(Mode.STANDBY));
+        MediaPlayer.create(this, R.raw.end).start();
         super.onDestroy();
     }
 
