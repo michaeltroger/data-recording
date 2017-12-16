@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <notices>
-
+    <notice>
+        <name>Sensor Value Legend</name>
+        <url>https://michaeltroger.com/</url>
+        <copyright>Copyright 2017 Michael Troger</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
 </notices>
