@@ -2,15 +2,22 @@ package com.michaeltroger.datarecording;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import com.michaeltroger.datarecording.controller.ClickHandlers;
 import com.michaeltroger.datarecording.databinding.ActivityMainBinding;
@@ -23,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
-    private MetaData metaData;
+    private SharedPreferences preferenceManger;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -31,8 +38,25 @@ public class MainActivity extends AppCompatActivity {
 
         final ActivityMainBinding binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         binding.setHandlers(new ClickHandlers());
-        metaData = new MetaData("","","");
-        binding.setMetaData(metaData);
+
+        preferenceManger = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        addTextChangedLister(binding.classLabel, R.string.pref_key_class_label);
+        addTextChangedLister(binding.person, R.string.pref_key_class_person);
+        addTextChangedLister(binding.location, R.string.pref_key_class_location);
+    }
+
+    private void addTextChangedLister(@NonNull final EditText editText, @StringRes final int prefKey) {
+        if (preferenceManger == null) throw new AssertionError("preference manager may not be null");
+
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(charSequence.length() == 0) return;
+                preferenceManger.edit().putString(getString(prefKey), charSequence.toString()).apply();
+            }
+            @Override public void afterTextChanged(Editable editable) {}
+            @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+        });
     }
 
     @Override

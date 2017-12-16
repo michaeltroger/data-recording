@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 <data>
     <variable name="handlers" type="com.michaeltroger.datarecording.controller.ClickHandlers"/>
-    <variable name="metaData" type="com.michaeltroger.datarecording.MetaData"/>
 </data>
 <android.support.constraint.ConstraintLayout
     xmlns:tools="http://schemas.android.com/tools"
@@ -64,7 +63,6 @@
         android:id="@+id/class_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@={metaData.classLabel}"
         android:hint="@string/class_label" />
     </android.support.design.widget.TextInputLayout>
 
@@ -83,7 +81,6 @@
             android:id="@+id/person"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@={metaData.personId}"
             android:hint="@string/person_id" />
     </android.support.design.widget.TextInputLayout>
 
@@ -102,7 +99,6 @@
             android:id="@+id/location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@={metaData.location}"
             android:hint="@string/location" />
 
     </android.support.design.widget.TextInputLayout>
