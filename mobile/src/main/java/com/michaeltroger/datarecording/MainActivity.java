@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
-    private SharedPreferences preferenceManger;
+    private SharedPreferences preferences;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -39,20 +39,20 @@ public class MainActivity extends AppCompatActivity {
         final ActivityMainBinding binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         binding.setHandlers(new ClickHandlers());
 
-        preferenceManger = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-        addTextChangedLister(binding.classLabel, R.string.pref_key_class_label);
-        addTextChangedLister(binding.person, R.string.pref_key_class_person);
-        addTextChangedLister(binding.location, R.string.pref_key_class_location);
+        preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        setupMetaData(binding.classLabel, R.string.pref_key_class_label);
+        setupMetaData(binding.person, R.string.pref_key_person);
+        setupMetaData(binding.location, R.string.pref_key_location);
     }
 
-    private void addTextChangedLister(@NonNull final EditText editText, @StringRes final int prefKey) {
-        if (preferenceManger == null) throw new AssertionError("preference manager may not be null");
+    private void setupMetaData(@NonNull final EditText editText, @StringRes final int prefKey) {
+        if (preferences == null) throw new AssertionError("preference manager may not be null");
 
+        editText.setText(preferences.getString(getString(prefKey), ""));
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(charSequence.length() == 0) return;
-                preferenceManger.edit().putString(getString(prefKey), charSequence.toString()).apply();
+                preferences.edit().putString(getString(prefKey), charSequence.toString()).apply();
             }
             @Override public void afterTextChanged(Editable editable) {}
             @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}

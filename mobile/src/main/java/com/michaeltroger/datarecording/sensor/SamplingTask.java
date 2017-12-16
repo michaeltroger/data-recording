@@ -27,6 +27,7 @@ public class SamplingTask extends AsyncTask<Void, Void, Void> {
         sensorListener = new SensorListener(context);
         final List<String> labels = sensorListener.getLabels();
 
+
         persistDataTask = new PersistDataTask(labels);
     }
 

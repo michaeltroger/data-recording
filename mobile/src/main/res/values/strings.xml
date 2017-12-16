@@ -5,8 +5,8 @@
     <string name="pref_key_sensor_list" translatable="false">sensor_list_key</string>
     <string name="pref_key_sampling_rate" translatable="false">pref_key_sampling_rate</string>
     <string name="pref_key_class_label" translatable="false">pref_key_class_label</string>
-    <string name="pref_key_class_person" translatable="false">pref_key_person</string>
-    <string name="pref_key_class_location" translatable="false">pref_key_location</string>
+    <string name="pref_key_person" translatable="false">pref_key_person</string>
+    <string name="pref_key_location" translatable="false">pref_key_location</string>
     <string name="pref_default_sampling_rate">50</string>
 
     <string name="start">start</string>

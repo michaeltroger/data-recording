@@ -1,13 +1,16 @@
 package com.michaeltroger.datarecording.sensor;
 
 
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.michaeltroger.datarecording.MainActivity;
 import com.michaeltroger.sensorvaluelegend.SensorValueLegend;
 
 import java.io.File;
