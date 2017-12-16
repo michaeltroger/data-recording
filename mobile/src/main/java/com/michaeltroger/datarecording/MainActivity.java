@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
+    private MetaData metaData;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
         final ActivityMainBinding binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         binding.setHandlers(new ClickHandlers());
+        metaData = new MetaData("","","");
+        binding.setMetaData(metaData);
     }
 
     @Override
