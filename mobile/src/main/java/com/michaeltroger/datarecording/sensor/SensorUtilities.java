@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 
 import com.michaeltroger.datarecording.MessageEvent;
+import com.michaeltroger.datarecording.Mode;
 import com.michaeltroger.datarecording.R;
 
 import org.greenrobot.eventbus.EventBus;
@@ -39,7 +40,9 @@ public class SensorUtilities {
     }
 
     public static void stopRecording(@NonNull final Context context) {
-
+        if (!isRecordingActive(context)) {
+            return;
+        }
         MediaPlayer.create(context, R.raw.end).start();
 
         final Intent intent =  new Intent(context, RecordingService.class);

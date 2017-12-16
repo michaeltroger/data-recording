@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -41,7 +42,6 @@ public class MainActivity extends AppCompatActivity implements IView {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
 
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         binding.setHandlers(new ClickHandlers());
@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements IView {
     @Override
     protected void onResume() {
         super.onResume();
+        EventBus.getDefault().register(this);
         requestWriteExternalStoragePermission();
 
         if(SensorUtilities.isRecordingActive(this)) {
@@ -79,13 +80,14 @@ public class MainActivity extends AppCompatActivity implements IView {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause() {
+        super.onPause();
         EventBus.getDefault().unregister(this);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(MessageEvent event) {
+    public void onMessageEvent(final MessageEvent event) {
+        Log.d(TAG, "received event:"+event.mode);
         switch(event.mode) {
             case STANDBY:
                 enableStandbyMode();
