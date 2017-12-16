@@ -1,5 +1,6 @@
 package com.michaeltroger.datarecording.sensor;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,7 +10,10 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 
+import com.michaeltroger.datarecording.MessageEvent;
 import com.michaeltroger.datarecording.R;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,6 +23,10 @@ import static android.content.Context.SENSOR_SERVICE;
 public class SensorUtilities {
 
     public static void startRecording(@NonNull final Context context) {
+        if (isRecordingActive(context)) {
+            return;
+        }
+        EventBus.getDefault().post(new MessageEvent(Mode.RECORDING));
         MediaPlayer.create(context, R.raw.start).start();
 
         final Intent intent =  new Intent(context, RecordingService.class);
@@ -31,12 +39,25 @@ public class SensorUtilities {
     }
 
     public static void stopRecording(@NonNull final Context context) {
+
         MediaPlayer.create(context, R.raw.end).start();
 
         final Intent intent =  new Intent(context, RecordingService.class);
         context.stopService(intent);
+
+        EventBus.getDefault().post(new MessageEvent(Mode.STANDBY));
     }
 
+
+    public static boolean isRecordingActive(@NonNull final Context context) {
+        final ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        for (final ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (RecordingService.class.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     @NonNull
     public static Set<Integer> getSensorTypesToRecord(@NonNull final Context context) {

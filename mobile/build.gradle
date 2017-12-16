@@ -38,4 +38,5 @@ dependencies {
 
     compile 'com.michaeltroger.sensorvaluelegend:sensorvaluelegend:1.0.0'
     compile 'de.psdev.licensesdialog:licensesdialog:1.8.2'
+    compile 'org.greenrobot:eventbus:3.1.1'
 }

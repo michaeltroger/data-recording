@@ -21,22 +21,29 @@ import android.widget.EditText;
 
 import com.michaeltroger.datarecording.controller.ClickHandlers;
 import com.michaeltroger.datarecording.databinding.ActivityMainBinding;
+import com.michaeltroger.datarecording.sensor.SensorUtilities;
 import com.michaeltroger.settings.SettingsActivity;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import de.psdev.licensesdialog.LicensesDialog;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements IView {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
     private SharedPreferences preferences;
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
 
-        final ActivityMainBinding binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         binding.setHandlers(new ClickHandlers());
 
         preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
@@ -63,7 +70,31 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         requestWriteExternalStoragePermission();
+
+        if(SensorUtilities.isRecordingActive(this)) {
+            enableRecordMode();
+        } else {
+            enableStandbyMode();
+        }
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event) {
+        switch(event.mode) {
+            case STANDBY:
+                enableStandbyMode();
+                break;
+            case RECORDING:
+                enableRecordMode();
+                break;
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
@@ -125,4 +156,21 @@ public class MainActivity extends AppCompatActivity {
                 MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
     }
 
+    @Override
+    public void enableRecordMode() {
+        binding.start.setEnabled(false);
+        binding.stop.setEnabled(true);
+        binding.classLabel.setEnabled(false);
+        binding.person.setEnabled(false);
+        binding.location.setEnabled(false);
+    }
+
+    @Override
+    public void enableStandbyMode() {
+        binding.start.setEnabled(true);
+        binding.stop.setEnabled(false);
+        binding.classLabel.setEnabled(true);
+        binding.person.setEnabled(true);
+        binding.location.setEnabled(true);
+    }
 }
