@@ -1,5 +1,5 @@
 package com.michaeltroger.datarecording;
 
-public enum Mode {
+public enum AppState {
     STANDBY, RECORDING
 }

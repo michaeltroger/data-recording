@@ -11,6 +11,7 @@ import com.google.android.gms.wearable.CapabilityInfo;
 import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.Wearable;
 import com.michaeltroger.datarecording.IView;
+import com.michaeltroger.datarecording.R;
 
 import java.util.Set;
 
@@ -23,6 +24,10 @@ public class Messaging {
     private GoogleApiClient googleApiClient;
     private String transcriptionNodeId;
     private IView view;
+    
+    private final String errorNoDeviceText;
+    private final String sentMessageText;
+    private final String failedToSendMessageText;
 
     public Messaging(@NonNull final Context context, @NonNull final IView view) {
         this.view = view;
@@ -32,6 +37,10 @@ public class Messaging {
 
         googleApiClient.connect();
         setupDatarecodingRemotecontrol();
+        
+        errorNoDeviceText = context.getString(R.string.error_no_device);
+        sentMessageText = context.getString(R.string.sent_message);
+        failedToSendMessageText = context.getString(R.string.error_failed_to_send_message);
     }
 
     public void cancel() {
@@ -40,7 +49,7 @@ public class Messaging {
 
     public void sendCommandToMobile(@NonNull final String command) {
         if (transcriptionNodeId == null) {
-            view.displayToast("no device connected");
+            view.displayToast(errorNoDeviceText);
             Log.e(TAG, "Unable to retrieve node with datarecording remotecontrol capability");
             return;
         }
@@ -53,10 +62,10 @@ public class Messaging {
         ).setResultCallback(
                 result -> {
                     if (result.getStatus().isSuccess()) {
-                        view.displayToast("sent msg");
+                        view.displayToast(sentMessageText);
                         Log.d(TAG, "command "+ command+" sent to mobile");
                     } else {
-                        view.displayToast("failed to send msg");
+                        view.displayToast(failedToSendMessageText);
                         Log.e(TAG, "failed to send command "+ command +" to mobile");
                     }
                 }

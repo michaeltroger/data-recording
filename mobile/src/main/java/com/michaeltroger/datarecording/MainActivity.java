@@ -87,8 +87,8 @@ public class MainActivity extends AppCompatActivity implements IView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(final MessageEvent event) {
-        Log.d(TAG, "received event:"+event.mode);
-        switch(event.mode) {
+        Log.d(TAG, "received event:"+event.appState);
+        switch(event.appState) {
             case STANDBY:
                 enableStandbyMode();
                 break;

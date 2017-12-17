@@ -4,9 +4,9 @@ import android.support.annotation.NonNull;
 
 public class MessageEvent {
 
-    public final Mode mode;
+    public final AppState appState;
 
-    public MessageEvent(@NonNull final Mode mode) {
-        this.mode = mode;
+    public MessageEvent(@NonNull final AppState appState) {
+        this.appState = appState;
     }
 }

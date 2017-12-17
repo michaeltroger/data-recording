@@ -16,8 +16,8 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
+import com.michaeltroger.datarecording.AppState;
 import com.michaeltroger.datarecording.MessageEvent;
-import com.michaeltroger.datarecording.Mode;
 import com.michaeltroger.datarecording.controller.NotificationActionService;
 import com.michaeltroger.datarecording.R;
 
@@ -38,7 +38,7 @@ public class RecordingService extends Service {
 
     @Override
     public int onStartCommand(final Intent intent, final int flags, final int startId) {
-        EventBus.getDefault().post(new MessageEvent(Mode.RECORDING));
+        EventBus.getDefault().post(new MessageEvent(AppState.RECORDING));
         MediaPlayer.create(this, R.raw.start).start();
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -47,10 +47,10 @@ public class RecordingService extends Service {
             samplingTask = new SamplingTask(this);
             samplingTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } catch (NoSensorChosenException e) {
-            Toast.makeText(this, "No sensor chosen", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.error_no_sensor), Toast.LENGTH_SHORT).show();
             stopSelf();
         } catch (IOException e) {
-            Toast.makeText(this, "Not able to write to filesystem", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.error_filesystem), Toast.LENGTH_SHORT).show();
             stopSelf();
         }
 
@@ -106,7 +106,7 @@ public class RecordingService extends Service {
         }
         notificationManager.cancel(NOTIFICATION_ID);
 
-        EventBus.getDefault().post(new MessageEvent(Mode.STANDBY));
+        EventBus.getDefault().post(new MessageEvent(AppState.STANDBY));
         MediaPlayer.create(this, R.raw.end).start();
         super.onDestroy();
     }

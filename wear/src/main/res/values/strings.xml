@@ -2,5 +2,8 @@
     <string name="app_name">Data Recording</string>
     <string name="start">start</string>
     <string name="stop">stop</string>
+    <string name="error_no_device">no device connected</string>
+    <string name="sent_message">sent msg</string>
+    <string name="error_failed_to_send_message">failed to send msg</string>
 
 </resources>
