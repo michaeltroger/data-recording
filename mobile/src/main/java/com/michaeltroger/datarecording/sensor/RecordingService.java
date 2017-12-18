@@ -35,11 +35,13 @@ public class RecordingService extends Service {
 
     private NotificationManager notificationManager;
     private AsyncTask<Void, Void, Void> samplingTask;
+    private MediaPlayer startSound;
 
     @Override
     public int onStartCommand(final Intent intent, final int flags, final int startId) {
         EventBus.getDefault().post(new MessageEvent(AppState.RECORDING));
-        MediaPlayer.create(this, R.raw.start).start();
+        startSound = MediaPlayer.create(this, R.raw.start);
+        startSound.start();
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         startInForeground();
@@ -107,6 +109,7 @@ public class RecordingService extends Service {
         notificationManager.cancel(NOTIFICATION_ID);
 
         EventBus.getDefault().post(new MessageEvent(AppState.STANDBY));
+        startSound.release();
         MediaPlayer.create(this, R.raw.end).start();
         super.onDestroy();
     }
