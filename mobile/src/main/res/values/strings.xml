@@ -7,7 +7,6 @@
     <string name="pref_key_sampling_rate" translatable="false">pref_key_sampling_rate</string>
     <string name="pref_key_sampling_number" translatable="false">pref_key_sampling_number</string>
     <string name="pref_key_class_label" translatable="false">pref_key_class_label</string>
-    <string name="pref_key_annotation" translatable="false">pref_key_annotation</string>
     <string name="pref_key_person" translatable="false">pref_key_person</string>
     <string name="pref_key_location" translatable="false">pref_key_location</string>
 
@@ -27,7 +26,6 @@
     <string name="location">Location ID</string>
     <string name="class_label">Class Label</string>
     <string name="sample_number">%1$s sample nr.: %2$d</string>
-    <string name="annotation">Annotation</string>
     <string name="next">Next</string>
     <string name="current">Current</string>
 

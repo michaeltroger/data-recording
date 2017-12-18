@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements IView {
         setupMetaData(binding.classLabel, R.string.pref_key_class_label);
         setupMetaData(binding.person, R.string.pref_key_person);
         setupMetaData(binding.location, R.string.pref_key_location);
-        setupMetaData(binding.annotation, R.string.pref_key_annotation);
 
         if (!SensorUtilities.hasWriteExternalStoragePermission(this)) {
             requestWriteExternalStoragePermission();
@@ -143,7 +142,6 @@ public class MainActivity extends AppCompatActivity implements IView {
         binding.classLabel.setEnabled(false);
         binding.person.setEnabled(false);
         binding.location.setEnabled(false);
-        binding.annotation.setEnabled(false);
 
         setSampleNumber(R.string.current);
     }
@@ -155,7 +153,6 @@ public class MainActivity extends AppCompatActivity implements IView {
         binding.classLabel.setEnabled(true);
         binding.person.setEnabled(true);
         binding.location.setEnabled(true);
-        binding.annotation.setEnabled(true);
 
         setSampleNumber(R.string.next);
     }

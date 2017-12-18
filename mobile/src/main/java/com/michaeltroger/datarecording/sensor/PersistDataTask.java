@@ -72,7 +72,6 @@ public class PersistDataTask extends AsyncTask<Void, Void, Void> {
         MetaDataPreferenceUtilities.increaseSampleNr(context);
         final String person = MetaDataPreferenceUtilities.getPerson(context);
         final String location = MetaDataPreferenceUtilities.getLocation(context);
-        final String annotation = MetaDataPreferenceUtilities.getAnnotation(context);
         
         for (final FileWriter fileWriter : fileWriters) {
             try {
@@ -83,8 +82,6 @@ public class PersistDataTask extends AsyncTask<Void, Void, Void> {
                 fileWriter.append(person);
                 fileWriter.append(COMMA_DELIMITER);
                 fileWriter.append(location);
-                fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(annotation);
             } catch (IOException e) {
                 e.printStackTrace();
             }
