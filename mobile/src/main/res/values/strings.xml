@@ -7,6 +7,7 @@
     <string name="pref_key_sampling_rate" translatable="false">pref_key_sampling_rate</string>
     <string name="pref_key_sampling_number" translatable="false">pref_key_sampling_number</string>
     <string name="pref_key_class_label" translatable="false">pref_key_class_label</string>
+    <string name="pref_key_annotation" translatable="false">pref_key_annotation</string>
     <string name="pref_key_person" translatable="false">pref_key_person</string>
     <string name="pref_key_location" translatable="false">pref_key_location</string>
 
@@ -31,5 +32,6 @@
     <string name="error_filesystem">Not able to write to filesystem</string>
     <string name="error_no_filesystem_permission">No filesystem permission</string>
     <string name="error_recording_already_active">recording already active</string>
+    <string name="annotation">Annotation</string>
 
 </resources>

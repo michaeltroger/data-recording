@@ -27,6 +27,12 @@ public class MetaDataPreferenceUtilities {
         return sharedPref.getString(context.getString(R.string.pref_key_class_label),"");
     }
 
+    @NonNull
+    public static String getAnnotation(@NonNull final Context context) {
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPref.getString(context.getString(R.string.pref_key_annotation),"");
+    }
+
     public static int getSampleNr(@NonNull final Context context) {
         final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
 
