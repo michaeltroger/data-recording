@@ -99,6 +99,8 @@ public class MainActivity extends AppCompatActivity implements IView {
             case RECORDING:
                 enableRecordMode();
                 break;
+            default:
+                throw new UnsupportedOperationException();
         }
     };
 
@@ -143,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         binding.location.setEnabled(false);
         binding.annotation.setEnabled(false);
 
-        setSampleNumber("Current");
+        setSampleNumber(R.string.current);
     }
 
     @Override
@@ -155,15 +157,15 @@ public class MainActivity extends AppCompatActivity implements IView {
         binding.location.setEnabled(true);
         binding.annotation.setEnabled(true);
 
-        setSampleNumber("Next");
+        setSampleNumber(R.string.next);
     }
 
     @Override
-    public void setSampleNumber(@NonNull final String label) {
+    public void setSampleNumber(@StringRes final int label) {
         binding.sampleNr.setText(
                 String.format(
                         getString(R.string.sample_number),
-                        label,
+                        getString(label),
                         MetaDataPreferenceUtilities.getSampleNr(this)
                 )
         );

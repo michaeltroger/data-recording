@@ -3,16 +3,10 @@ t
 Dwear/src/main/java/com/michaeltroger/datarecording/MainActivity.java,e/a/ead32c3f0cc6379d2d21535c13a8fe5e3def97f4
 Ä
 Pmobile/src/main/java/com/michaeltroger/datarecording/sensor/SensorUtilities.java,c/b/cb621410bac6fb28133c2c04c3828699fa13f04e
-Ä
-Pmobile/src/main/java/com/michaeltroger/datarecording/commands/ClickHandlers.java,1/d/1dc0acee85383cbc7ca092d29c5fb9b1242045d4
 A
 wear/build.gradle,e/3/e3dd3ce9551eb4e88dd1d433e48daac44556b091
 C
 mobile/build.gradle,f/8/f80b181ebd0eededcba5aee16760aab5dafd4ede
-ú
-lmobile/src/main/java/com/michaeltroger/datarecording/commands/DatarecordingRemotecontrolListenerService.java,a/7/a743a4023776b9e8c7577b9ff34ad9a65427bd32
-å
-\mobile/src/main/java/com/michaeltroger/datarecording/commands/NotificationActionService.java,4/5/450db7a2eeb9ea37baaa836914b789cc52c8d0c1
 v
 Fmobile/src/main/java/com/michaeltroger/datarecording/MainActivity.java,0/7/078baa798eaa29c2b198d335bda33daa6eafbcc3
 Å

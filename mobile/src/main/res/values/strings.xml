@@ -33,5 +33,7 @@
     <string name="error_filesystem">Not able to write to filesystem</string>
     <string name="error_no_filesystem_permission">No filesystem permission</string>
     <string name="error_recording_already_active">recording already active</string>
+    <string name="next">Next</string>
+    <string name="current">Current</string>
 
 </resources>

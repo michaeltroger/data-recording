@@ -1,10 +1,10 @@
 package com.michaeltroger.datarecording;
 
-import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 
 public interface IView {
     void enableRecordMode();
     void enableStandbyMode();
-    void setSampleNumber(@NonNull final String label);
+    void setSampleNumber(@StringRes final int label);
     void showLicenseInfo();
 }
