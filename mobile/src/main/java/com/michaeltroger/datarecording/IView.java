@@ -6,4 +6,5 @@ public interface IView {
     void enableRecordMode();
     void enableStandbyMode();
     void setSampleNumber(@NonNull final String text);
+    void showLicenseInfo();
 }

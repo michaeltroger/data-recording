@@ -124,7 +124,8 @@ public class MainActivity extends AppCompatActivity implements IView {
 
     }
 
-    private void showLicenseInfo() {
+    @Override
+    public void showLicenseInfo() {
         new LicensesDialog.Builder(this)
                 .setNotices(R.raw.notices)
                 .setIncludeOwnLicense(true)
