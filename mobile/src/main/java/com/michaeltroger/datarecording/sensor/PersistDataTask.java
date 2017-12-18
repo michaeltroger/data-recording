@@ -69,6 +69,7 @@ public class PersistDataTask extends AsyncTask<Void, Void, Void> {
     private void writeStaticSampleInfosIntoFile(@NonNull final Context context) {
         final String classLabel = MetaDataPreferenceUtilities.getClassLabel(context);
         final String sampleNr = String.valueOf(MetaDataPreferenceUtilities.getSampleNr(context));
+        MetaDataPreferenceUtilities.increaseSampleNr(context);
         final String person = MetaDataPreferenceUtilities.getPerson(context);
         final String location = MetaDataPreferenceUtilities.getLocation(context);
         

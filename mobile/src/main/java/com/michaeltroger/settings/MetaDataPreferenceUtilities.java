@@ -35,6 +35,17 @@ public class MetaDataPreferenceUtilities {
                 "1"
         ));
 
+        return sampleNr;
+    }
+
+    public static int increaseSampleNr(@NonNull final Context context) {
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+
+        final int sampleNr = Integer.valueOf(sharedPref.getString(
+                context.getString(R.string.pref_key_sampling_number),
+                "1"
+        ));
+
         final int nextSampleNr = sampleNr + 1;
         sharedPref.edit().putString(
                 context.getString(R.string.pref_key_sampling_number),

@@ -25,6 +25,7 @@
     <string name="person_id">Person ID</string>
     <string name="location">Location</string>
     <string name="class_label">Class Label</string>
+    <string name="sample_number">%1$s sample nr.: %2$d</string>
 
     <string name="error_no_sensor">No sensor chosen</string>
     <string name="error_filesystem">Not able to write to filesystem</string>

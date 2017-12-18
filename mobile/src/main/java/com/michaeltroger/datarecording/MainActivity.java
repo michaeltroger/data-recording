@@ -21,6 +21,7 @@ import android.widget.EditText;
 import com.michaeltroger.datarecording.controller.ClickHandlers;
 import com.michaeltroger.datarecording.databinding.ActivityMainBinding;
 import com.michaeltroger.datarecording.sensor.SensorUtilities;
+import com.michaeltroger.settings.MetaDataPreferenceUtilities;
 import com.michaeltroger.settings.SettingsActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -138,6 +139,8 @@ public class MainActivity extends AppCompatActivity implements IView {
         binding.classLabel.setEnabled(false);
         binding.person.setEnabled(false);
         binding.location.setEnabled(false);
+
+        setSampleNumber("Current");
     }
 
     @Override
@@ -147,6 +150,19 @@ public class MainActivity extends AppCompatActivity implements IView {
         binding.classLabel.setEnabled(true);
         binding.person.setEnabled(true);
         binding.location.setEnabled(true);
+
+        setSampleNumber("Next");
+    }
+
+    @Override
+    public void setSampleNumber(@NonNull final String text) {
+        binding.sampleNr.setText(
+                String.format(
+                        getString(R.string.sample_number),
+                        text,
+                        MetaDataPreferenceUtilities.getSampleNr(this)
+                )
+        );
     }
 
     private void requestWriteExternalStoragePermission() {
