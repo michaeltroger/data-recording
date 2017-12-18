@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements IView {
     }
 
     @Override
-    public void setSampleNumber(@NonNull final String text) {
+    public void setSampleNumber(@NonNull final String label) {
         binding.sampleNr.setText(
                 String.format(
                         getString(R.string.sample_number),
