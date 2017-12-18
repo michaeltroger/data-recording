@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         binding.sampleNr.setText(
                 String.format(
                         getString(R.string.sample_number),
-                        text,
+                        label,
                         MetaDataPreferenceUtilities.getSampleNr(this)
                 )
         );
