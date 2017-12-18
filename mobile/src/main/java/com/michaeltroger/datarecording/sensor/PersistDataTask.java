@@ -34,7 +34,7 @@ public class PersistDataTask extends AsyncTask<Void, Void, Void> {
     public PersistDataTask(@NonNull final Context context, final List<String> labels) throws IOException {
         this.labels = labels;
         createFileWriters();
-        writeStaticSampleInfosIntoFile(context);
+        writeSampleMetaDataIntoFile(context);
     }
 
     private void createFileWriters() throws IOException {
@@ -66,7 +66,7 @@ public class PersistDataTask extends AsyncTask<Void, Void, Void> {
     }
 
 
-    private void writeStaticSampleInfosIntoFile(@NonNull final Context context) throws IOException {
+    private void writeSampleMetaDataIntoFile(@NonNull final Context context) throws IOException {
         final String classLabel = MetaDataPreferenceUtilities.getClassLabel(context);
         final String sampleNr = String.valueOf(MetaDataPreferenceUtilities.getSampleNr(context));
         MetaDataPreferenceUtilities.increaseSampleNr(context);
