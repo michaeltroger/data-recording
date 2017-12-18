@@ -3,7 +3,6 @@ package com.michaeltroger.datarecording;
 import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -122,23 +121,6 @@ public class MainActivity extends AppCompatActivity implements IView {
                 return super.onOptionsItemSelected(item);
         }
 
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // TODO: enable recording
-                } else {
-                   // TODO: disable recording!
-                }
-                break;
-            }
-            default:
-                throw new UnsupportedOperationException();
-        }
     }
 
     private void showLicenseInfo() {
