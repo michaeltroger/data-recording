@@ -66,7 +66,7 @@ public class PersistDataTask extends AsyncTask<Void, Void, Void> {
     }
 
 
-    private void writeStaticSampleInfosIntoFile(@NonNull final Context context) {
+    private void writeStaticSampleInfosIntoFile(@NonNull final Context context) throws IOException {
         final String classLabel = MetaDataPreferenceUtilities.getClassLabel(context);
         final String sampleNr = String.valueOf(MetaDataPreferenceUtilities.getSampleNr(context));
         MetaDataPreferenceUtilities.increaseSampleNr(context);
@@ -74,17 +74,13 @@ public class PersistDataTask extends AsyncTask<Void, Void, Void> {
         final String location = MetaDataPreferenceUtilities.getLocation(context);
         
         for (final FileWriter fileWriter : fileWriters) {
-            try {
-                fileWriter.append(classLabel);
-                fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(sampleNr);
-                fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(person);
-                fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(location);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            fileWriter.append(classLabel);
+            fileWriter.append(COMMA_DELIMITER);
+            fileWriter.append(sampleNr);
+            fileWriter.append(COMMA_DELIMITER);
+            fileWriter.append(person);
+            fileWriter.append(COMMA_DELIMITER);
+            fileWriter.append(location);
         }
     }
 
