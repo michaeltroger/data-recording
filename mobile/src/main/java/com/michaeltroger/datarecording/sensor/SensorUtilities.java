@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.SensorManager;
 import android.os.Build;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -24,12 +25,14 @@ public class SensorUtilities {
 
     public static void startRecording(@NonNull final Context context) {
         if (!hasWriteExternalStoragePermission(context)) {
-            Toast.makeText(context, R.string.error_no_filesystem_permission, Toast.LENGTH_SHORT).show();
+            final Handler mHandler = new Handler(context.getMainLooper());
+            mHandler.post(() -> Toast.makeText(context.getApplicationContext(), R.string.error_no_filesystem_permission, Toast.LENGTH_SHORT).show());
             return;
         }
 
         if (isRecordingActive(context)) {
-            Toast.makeText(context, R.string.error_recording_already_active, Toast.LENGTH_SHORT).show();
+            final Handler mHandler = new Handler(context.getMainLooper());
+            mHandler.post(() -> Toast.makeText(context.getApplicationContext(), R.string.error_recording_already_active, Toast.LENGTH_SHORT).show());
             return;
         }
 

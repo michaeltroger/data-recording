@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -49,10 +50,12 @@ public class RecordingService extends Service {
             samplingTask = new SamplingTask(this);
             samplingTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } catch (NoSensorChosenException e) {
-            Toast.makeText(this, getString(R.string.error_no_sensor), Toast.LENGTH_SHORT).show();
+            final Handler mHandler = new Handler(getMainLooper());
+            mHandler.post(() -> Toast.makeText(getApplicationContext(), R.string.error_no_sensor, Toast.LENGTH_SHORT).show());
             stopSelf();
         } catch (IOException e) {
-            Toast.makeText(this, getString(R.string.error_filesystem), Toast.LENGTH_SHORT).show();
+            final Handler mHandler = new Handler(getMainLooper());
+            mHandler.post(() -> Toast.makeText(getApplicationContext(), R.string.error_filesystem, Toast.LENGTH_SHORT).show());
             stopSelf();
         }
 

@@ -3,6 +3,7 @@ package com.michaeltroger.datarecording;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.wearable.activity.WearableActivity;
 import android.widget.Toast;
 
@@ -39,7 +40,7 @@ public class MainActivity extends WearableActivity implements IView {
     }
 
     @Override
-    public void displayToast(@NonNull final String message) {
+    public void displayToast(final @StringRes int message) {
         if(toast != null) {
             toast.cancel();
         }
