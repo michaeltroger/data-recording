@@ -27,9 +27,7 @@ public class SamplingTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... voids) {
-        // TODO: better variable naming
-        final long startTime = SystemClock.elapsedRealtimeNanos();
-        long startTimeNanos = SystemClock.elapsedRealtimeNanos();
+        long lastSamplingTimeNanos = SystemClock.elapsedRealtimeNanos();
 
         persistDataTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
@@ -39,12 +37,11 @@ public class SamplingTask extends AsyncTask<Void, Void, Void> {
             }
 
             final long currentTimeNanos = SystemClock.elapsedRealtimeNanos();
-            if (currentTimeNanos < startTimeNanos + samplingIntervalNanoSeconds) {
+            if (currentTimeNanos < lastSamplingTimeNanos + samplingIntervalNanoSeconds) {
                 continue;
             }
 
-            startTimeNanos = currentTimeNanos;
-            final float seconds = (currentTimeNanos - startTime) / (float)ONE_SECOND_IN_NANOS;
+            lastSamplingTimeNanos = currentTimeNanos;
 
             final Map<String, float[]> sensorData = sensorListener.getSensorData();
             persistDataTask.addDataToPersist(sensorData);
