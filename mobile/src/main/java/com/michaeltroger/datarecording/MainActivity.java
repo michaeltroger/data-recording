@@ -9,7 +9,6 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -35,7 +34,8 @@ import de.psdev.licensesdialog.LicensesDialog;
 public class MainActivity extends AppCompatActivity implements IView {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
+    public static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
+
     private SharedPreferences preferences;
     private ActivityMainBinding binding;
 
@@ -50,6 +50,10 @@ public class MainActivity extends AppCompatActivity implements IView {
         setupMetaData(binding.classLabel, R.string.pref_key_class_label);
         setupMetaData(binding.person, R.string.pref_key_person);
         setupMetaData(binding.location, R.string.pref_key_location);
+
+        if (!SensorUtilities.hasWriteExternalStoragePermission(this)) {
+            requestWriteExternalStoragePermission();
+        }
     }
 
     private void setupMetaData(@NonNull final EditText editText, @StringRes final int prefKey) {
@@ -70,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements IView {
     protected void onResume() {
         super.onResume();
         EventBus.getDefault().register(this);
-        requestWriteExternalStoragePermission();
 
         if(SensorUtilities.isRecordingActive(this)) {
             enableRecordMode();
@@ -146,18 +149,6 @@ public class MainActivity extends AppCompatActivity implements IView {
                 .show();
     }
 
-    private void requestWriteExternalStoragePermission() {
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
-    }
-
     @Override
     public void enableRecordMode() {
         binding.start.setEnabled(false);
@@ -174,5 +165,11 @@ public class MainActivity extends AppCompatActivity implements IView {
         binding.classLabel.setEnabled(true);
         binding.person.setEnabled(true);
         binding.location.setEnabled(true);
+    }
+
+    private void requestWriteExternalStoragePermission() {
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
     }
 }

@@ -1,14 +1,17 @@
 package com.michaeltroger.datarecording.sensor;
 
+import android.Manifest;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.hardware.SensorManager;
-import android.media.MediaPlayer;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.widget.Toast;
 
 import com.michaeltroger.datarecording.R;
 
@@ -20,7 +23,13 @@ import static android.content.Context.SENSOR_SERVICE;
 public class SensorUtilities {
 
     public static void startRecording(@NonNull final Context context) {
+        if (!hasWriteExternalStoragePermission(context)) {
+            Toast.makeText(context, R.string.error_no_filesystem_permission, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (isRecordingActive(context)) {
+            Toast.makeText(context, R.string.error_recording_already_active, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -87,6 +96,13 @@ public class SensorUtilities {
         );
 
         return Integer.valueOf(samplingRate);
+    }
+
+    public static boolean hasWriteExternalStoragePermission(@NonNull final Context context) {
+        return ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED;
     }
 
 }
