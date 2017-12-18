@@ -39,7 +39,7 @@ public class SensorListener implements SensorEventListener {
             sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_FASTEST);
             Log.d(TAG,"registered" + sensor.toString());
 
-            final String[] legend = SensorValueLegend.getLegend(sensor.getType());
+            final String[] legend = SensorValueLegend.getDescriptionsShort(sensor.getType());
             labels.addAll(Arrays.asList(legend));
 
             final float[] fl = new float[legend.length];
