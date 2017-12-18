@@ -110,7 +110,10 @@ public class RecordingService extends Service {
 
         EventBus.getDefault().post(new MessageEvent(AppState.STANDBY));
         startSound.release();
-        MediaPlayer.create(this, R.raw.end).start();
+        final MediaPlayer endSound = MediaPlayer.create(this, R.raw.end);
+        endSound.start();
+        endSound.setOnCompletionListener(MediaPlayer::release);
+
         super.onDestroy();
     }
 
