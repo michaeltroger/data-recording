@@ -1,6 +1,6 @@
 # Sensor Data Recording for Android Smartphones with Android Wear as Remote Control
 <img src="/wear.png" width="120" alt="wear module">
-<img src="/mobile.png" width="120" alt="mobile module">
+<img src="/mobile.jpg" width="120" alt="mobile module">
 
 
 Am Android Studio 3 project for using an Android Wear 2 Smartwatch as remote control for sensor data recording on an Android Smartphone.

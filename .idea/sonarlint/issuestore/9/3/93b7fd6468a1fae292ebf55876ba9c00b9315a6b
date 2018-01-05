@@ -1,8 +1,2 @@
 
-Msquid:S1481",Remove this unused "seconds" local variable.(óçÚÊúÿÿÿÿ8ùòã½„,
-Ssquid:S1135"2Complete the task associated to this TODO comment.(“‘ú´şÿÿÿÿ8ô£“¿„,
-Isquid:S1481"(Remove this unused "key" local variable.(Ëğüİüÿÿÿÿ8ì‰‹¾„,
-Xsquid:S1854"7Remove this useless assignment to local variable "key".(Ëğüİüÿÿÿÿ8ì‰‹¾„,
-\squid:S1854";Remove this useless assignment to local variable "seconds".(óçÚÊúÿÿÿÿ8ùòã½„,
-Ssquid:S1135"2Complete the task associated to this TODO comment.(¸Æñ´úÿÿÿÿ8ùòã½„,
-asquid:S1858"@"getKey" returns a string, there's no need to call "toString()".(Ëğüİüÿÿÿÿ8·åˆ¾„,
+Hsquid:S1068"'Remove this unused "TAG" private field.(è´àõıÿÿÿÿ8Øæ‚Ú†,

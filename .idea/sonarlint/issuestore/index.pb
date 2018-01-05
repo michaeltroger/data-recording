@@ -17,3 +17,15 @@ Omobile/src/main/java/com/michaeltroger/datarecording/sensor/SensorListener.java
 Mmobile/src/main/java/com/michaeltroger/datarecording/sensor/SamplingTask.java,9/3/93b7fd6468a1fae292ebf55876ba9c00b9315a6b
 €
 Pmobile/src/main/java/com/michaeltroger/datarecording/sensor/PersistDataTask.java,a/c/aca5f9645af9860a3ac0e997c1bce6447b2bb49a
+o
+?mobile/src/main/java/com/michaeltroger/datarecording/IView.java,e/5/e52eca1240655fd9646d70807dde117798e4ca7d
+S
+#mobile/src/main/AndroidManifest.xml,6/8/68c55220cdf442f45f1e1e1838e6f5ecdacb04a5
+€
+Pmobile/src/main/java/com/michaeltroger/settings/MetaDataPreferenceUtilities.java,c/0/c000a53bab4ad6b566027e75e5471ed9e0ccdd79
+y
+Imobile/src/main/java/com/michaeltroger/settings/SensorListPreference.java,d/b/db3942aa6fd6db0620c595d2a023744c374d27a3
+u
+Emobile/src/main/java/com/michaeltroger/settings/SettingsActivity.java,0/6/0628747a1f5f470eb51a396b09f2f30f46373fa8
+u
+Emobile/src/main/java/com/michaeltroger/settings/SettingsFragment.java,e/5/e5c29dceb6dc6a54d0598a18bc9cf69661d7bdca
