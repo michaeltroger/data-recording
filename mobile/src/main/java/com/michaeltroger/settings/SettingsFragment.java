@@ -6,6 +6,10 @@ import android.preference.PreferenceFragment;
 
 import com.michaeltroger.datarecording.R;
 
+/**
+ * Default preference fragment with custom
+ * preference element injected
+ */
 public class SettingsFragment extends PreferenceFragment {
 
     @Override

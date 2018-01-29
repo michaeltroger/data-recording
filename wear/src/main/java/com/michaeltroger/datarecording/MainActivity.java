@@ -2,7 +2,6 @@ package com.michaeltroger.datarecording;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.wearable.activity.WearableActivity;
 import android.widget.Toast;
@@ -11,12 +10,20 @@ import com.michaeltroger.datarecording.controller.ClickHandlers;
 import com.michaeltroger.datarecording.databinding.ActivityMainBinding;
 import com.michaeltroger.datarecording.messaging.Messaging;
 
-
+/**
+ * The core of the application and its starting point
+ */
 public class MainActivity extends WearableActivity implements IView {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    /**
+     * Responsible for sending messages like a remote control
+     */
     private Messaging messaging;
+    /**
+     * For displaying popup messages
+     */
     private Toast toast;
 
     @Override
@@ -25,9 +32,9 @@ public class MainActivity extends WearableActivity implements IView {
         final ActivityMainBinding binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
 
         messaging = new Messaging(this, this);
-        binding.setHandlers(new ClickHandlers(this));
+        binding.setHandlers(new ClickHandlers(messaging));
 
-        setAmbientEnabled();
+        setAmbientEnabled(); // keep the screen on
     }
 
     @Override
@@ -48,8 +55,4 @@ public class MainActivity extends WearableActivity implements IView {
         toast.show();
     }
 
-    @Override
-    public void sendCommand(@NonNull final String command) {
-        messaging.sendCommandToMobile(command);
-    }
 }

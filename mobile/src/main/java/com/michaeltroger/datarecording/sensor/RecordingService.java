@@ -26,16 +26,45 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 
+/**
+ * Core responsibility for recording and stopping the recording
+ */
 public class RecordingService extends Service {
+    /**
+     * The id with which the recording notification is associated
+     */
     private static final int NOTIFICATION_ID = 101;
+    /**
+     * The title of the recording notification
+     */
     private static final String NOTIFICATION_TITLE = "Recording data";
+    /**
+     * The title of the stop recording action in the notification
+     */
     private static final String NOTIFICATION_STOP_TITLE = "Stop";
 
+    /**
+     * The channel ID is needed on Android Oreo and higher
+     */
     private static final String CHANNEL_ID = "com.michaeltroger.datarecording.DATARECORDING";
+    /**
+     * The channel name is needed on Android Oreo and higher
+     */
     private static final String CHANNEL_NAME = "Data recording";
 
+    /**
+     * A reference to the notification manager in order to cancel
+     * the notification when recording is done
+     */
     private NotificationManager notificationManager;
+    /**
+     * The sampling task asks with the frequency defined in settings
+     * for sensor values and tells another Task to persist the data
+     */
     private AsyncTask<Void, Void, Void> samplingTask;
+    /**
+     * The sound to play when recording starts
+     */
     private MediaPlayer startSound;
 
     @Override
@@ -62,11 +91,17 @@ public class RecordingService extends Service {
         return START_NOT_STICKY;
     }
 
-
+    /**
+     * We start the service as a foreground service
+     * i.e. with an ongoing notification.
+     * The notification gives the user also more interaction possibilities
+     */
     private void startInForeground() {
-        String channelId = null;
+        final String channelId;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             channelId = createNotificationChannel();
+        } else {
+            channelId = null;
         }
 
         final Intent stopRecordingIntent = new Intent(this, NotificationActionService.class);
@@ -91,6 +126,10 @@ public class RecordingService extends Service {
         startForeground(NOTIFICATION_ID, notification);
     }
 
+    /**
+     * Create a notification channel when Android oreo is used
+     * @return The created channel's ID
+     */
     @RequiresApi(Build.VERSION_CODES.O)
     private String createNotificationChannel() {
         final NotificationChannel notificationChannel = new NotificationChannel(
@@ -112,10 +151,12 @@ public class RecordingService extends Service {
         notificationManager.cancel(NOTIFICATION_ID);
 
         EventBus.getDefault().post(new MessageEvent(AppState.STANDBY));
-        startSound.release();
+        startSound.release(); // not releasing could lead to a memory leak
+
+        // The sound to play when the recording stops
         final MediaPlayer endSound = MediaPlayer.create(this, R.raw.end);
         endSound.start();
-        endSound.setOnCompletionListener(MediaPlayer::release);
+        endSound.setOnCompletionListener(MediaPlayer::release); // not releasing could lead to a memory leak
 
         super.onDestroy();
     }

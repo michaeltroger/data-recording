@@ -30,13 +30,24 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import de.psdev.licensesdialog.LicensesDialog;
 
-
+/**
+ * The core of the application and its starting point
+ */
 public class MainActivity extends AppCompatActivity implements IView {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    public static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
+    /**
+     * The request code for writing to external storage
+     */
+    private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
 
+    /**
+     * Cache user input in text fields in preferences
+     */
     private SharedPreferences preferences;
+    /**
+     * To access the view
+     */
     private ActivityMainBinding binding;
 
     @Override
@@ -46,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         binding.setHandlers(new ClickHandlers());
 
+        // Load the cached user input if available from preferences
         preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         setupMetaData(binding.classLabel, R.string.pref_key_class_label);
         setupMetaData(binding.person, R.string.pref_key_person);
@@ -56,6 +68,13 @@ public class MainActivity extends AppCompatActivity implements IView {
         }
     }
 
+    /**
+     * Loads cached user input from preferences and registers
+     * text changed listeners in order to write changed input
+     * again back into preferences
+     * @param editText The text field to load data into and to read from
+     * @param prefKey The key with with the corresponding preference can be retrieved
+     */
     private void setupMetaData(@NonNull final EditText editText, @StringRes final int prefKey) {
         if (preferences == null) throw new AssertionError("preference manager may not be null");
 
@@ -88,6 +107,11 @@ public class MainActivity extends AppCompatActivity implements IView {
         EventBus.getDefault().unregister(this);
     }
 
+    /**
+     * Is called when the app state changes
+     * i.e. when recording starts and when it stops
+     * @param event Holds the updated {@link com.michaeltroger.datarecording.AppState AppState}
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(final MessageEvent event) {
         Log.d(TAG, "received event:"+event.appState);
@@ -168,6 +192,9 @@ public class MainActivity extends AppCompatActivity implements IView {
         );
     }
 
+    /**
+     * Helper method to request external storage permission
+     */
     private void requestWriteExternalStoragePermission() {
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},

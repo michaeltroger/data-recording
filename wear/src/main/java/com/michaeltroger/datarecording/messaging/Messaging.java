@@ -3,7 +3,6 @@ package com.michaeltroger.datarecording.messaging;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
 import android.util.Log;
 
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -16,16 +15,40 @@ import com.michaeltroger.datarecording.R;
 
 import java.util.Set;
 
+/**
+ * Responsible for sending messages to the smartphone
+ */
 public class Messaging {
     private static final String TAG = Messaging.class.getSimpleName();
 
+    /**
+     * The message path for which the receiver (smartphone) listens to
+     */
     private static final String DATARECORDING_REMOTECONTROL_MESSAGE_PATH = "/datarecording_remotecontrol";
+    /**
+     * The capability which the receiver (smartphone) needs to get this message
+     */
     private static final String DATARECORDING_REMOTECONTROL_CAPABILITY_NAME = "datarecording_remotecontrol";
 
+    /**
+     * The sensing occurs via the Google API
+     */
     private GoogleApiClient googleApiClient;
+    /**
+     * The conneced node's id, i.e. of the smartphone
+     */
     private String transcriptionNodeId;
+    /**
+     * Needed to display toasts
+     */
     private IView view;
 
+    /**
+     * Creates an instance by initializing everything needed in
+     * order to send a command later on
+     * @param context
+     * @param view
+     */
     public Messaging(@NonNull final Context context, @NonNull final IView view) {
         this.view = view;
         googleApiClient = new GoogleApiClient.Builder(context)
@@ -36,10 +59,17 @@ public class Messaging {
         setupDatarecodingRemotecontrol();
     }
 
+    /**
+     * Unsubscribe from the Google API
+     */
     public void cancel() {
         googleApiClient.disconnect();
     }
 
+    /**
+     * Sends a command to the smartphone
+     * @param command The command to send
+     */
     public void sendCommandToMobile(@NonNull final String command) {
         if (transcriptionNodeId == null) {
             view.displayToast(R.string.error_no_device);
@@ -66,6 +96,11 @@ public class Messaging {
 
     }
 
+    /**
+     * Checks nearby for available devices with the needed capability
+     * in case no device nearby -> a callback is registered to get to know
+     * state changes
+     */
     private void setupDatarecodingRemotecontrol() {
         new Thread(() -> {
             final CapabilityApi.GetCapabilityResult result =
@@ -84,11 +119,20 @@ public class Messaging {
                 DATARECORDING_REMOTECONTROL_CAPABILITY_NAME);
     }
 
+    /**
+     * Updates the node to send commands to
+     * @param capabilityInfo the capability info to use
+     */
     private void updateTranscriptionCapability(final CapabilityInfo capabilityInfo) {
         final Set<Node> connectedNodes = capabilityInfo.getNodes();
         transcriptionNodeId = pickBestNodeId(connectedNodes);
     }
 
+    /**
+     * Picks the best node for sending commands to
+     * @param nodes a collection of nodes
+     * @return the best node or one arbitrarily
+     */
     private String pickBestNodeId(final Set<Node> nodes) {
         String bestNodeId = null;
         // Find a nearby node or pick one arbitrarily
