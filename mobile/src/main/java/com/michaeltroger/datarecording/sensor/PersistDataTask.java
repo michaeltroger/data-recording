@@ -12,9 +12,11 @@ import com.michaeltroger.settings.MetaDataPreferenceUtilities;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.AbstractQueue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 // TODO: do the actual implementation
@@ -29,7 +31,7 @@ public class PersistDataTask extends AsyncTask<Void, Void, Void> {
 
     private List<FileWriter> fileWriters;
 
-    private ConcurrentLinkedQueue<Map<String,float[]>> valuesQueue = new ConcurrentLinkedQueue<>();
+    private Queue<Map<String,float[]>> valuesQueue = new ConcurrentLinkedQueue<>();
 
     public PersistDataTask(@NonNull final Context context, final List<String> labels) throws IOException {
         this.labels = labels;
