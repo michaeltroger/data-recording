@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import com.michaeltroger.datarecording.controller.ClickHandlers;
 import com.michaeltroger.datarecording.databinding.ActivityMainBinding;
-import com.michaeltroger.datarecording.messaging.Messaging;
+import com.michaeltroger.datarecording.messaging.RemoteControlSenderService;
 
 /**
  * The core of the application and its starting point
@@ -20,7 +20,7 @@ public class MainActivity extends WearableActivity implements IView {
     /**
      * Responsible for sending messages like a remote control
      */
-    private Messaging messaging;
+    private RemoteControlSenderService remoteControlSenderService;
     /**
      * For displaying popup messages
      */
@@ -31,8 +31,8 @@ public class MainActivity extends WearableActivity implements IView {
         super.onCreate(savedInstanceState);
         final ActivityMainBinding binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
 
-        messaging = new Messaging(this, this);
-        binding.setHandlers(new ClickHandlers(messaging));
+        remoteControlSenderService = new RemoteControlSenderService(this, this);
+        binding.setHandlers(new ClickHandlers(remoteControlSenderService));
 
         setAmbientEnabled(); // keep the screen on
     }
@@ -42,7 +42,7 @@ public class MainActivity extends WearableActivity implements IView {
         if(toast != null) {
             toast.cancel();
         }
-        messaging.cancel();
+        remoteControlSenderService.cancel();
         super.onDestroy();
     }
 

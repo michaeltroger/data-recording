@@ -34,9 +34,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     wearApp project(':wear')
     implementation 'com.google.android.gms:play-services-wearable:11.8.0'
-    compile 'com.android.support:design:27.0.2'
+    implementation 'com.android.support:design:27.0.2'
 
-    compile 'com.michaeltroger.sensorvaluelegend:sensorvaluelegend:1.0.3'
-    compile 'de.psdev.licensesdialog:licensesdialog:1.8.2'
-    compile 'org.greenrobot:eventbus:3.1.1'
+    implementation 'com.michaeltroger.sensorvaluelegend:sensorvaluelegend:1.0.3'
+    implementation 'de.psdev.licensesdialog:licensesdialog:1.8.2'
+    implementation 'org.greenrobot:eventbus:3.1.1'
 }

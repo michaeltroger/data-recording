@@ -9,9 +9,9 @@ import com.michaeltroger.datarecording.sensor.SensorUtilities;
 /**
  * Handles incoming messages from the smartwatch (remote control)
  */
-public class DatarecordingRemotecontrolListenerService extends WearableListenerService {
+public class RemoteControlListenerService extends WearableListenerService {
 
-    private static final String TAG = DatarecordingRemotecontrolListenerService.class.getSimpleName();
+    private static final String TAG = RemoteControlListenerService.class.getSimpleName();
 
     /**
      * The command to start the recording with

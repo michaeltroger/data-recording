@@ -41,3 +41,7 @@ X
 settings.gradle,0/5/05efc8b1657769a27696d478ded1e95f38737233
 <
 build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
+‚
+Rmobile/src/main/java/com/michaeltroger/datarecording/controller/ClickHandlers.java,a/d/ad5653a570e0f027981f94d1c8a299d6ee650a64
+r
+Bmobile/src/main/java/com/michaeltroger/datarecording/AppState.java,3/d/3d961af3838c4a88b8ba601d7ed4ac1648483ce5

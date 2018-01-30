@@ -18,8 +18,8 @@ import java.util.Set;
 /**
  * Responsible for sending messages to the smartphone
  */
-public class Messaging {
-    private static final String TAG = Messaging.class.getSimpleName();
+public class RemoteControlSenderService {
+    private static final String TAG = RemoteControlSenderService.class.getSimpleName();
 
     /**
      * The message path for which the receiver (smartphone) listens to
@@ -49,7 +49,7 @@ public class Messaging {
      * @param context
      * @param view
      */
-    public Messaging(@NonNull final Context context, @NonNull final IView view) {
+    public RemoteControlSenderService(@NonNull final Context context, @NonNull final IView view) {
         this.view = view;
         googleApiClient = new GoogleApiClient.Builder(context)
                 .addApi(Wearable.API)
